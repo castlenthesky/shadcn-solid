@@ -11,15 +11,22 @@ import type {
 import { Command as CommandPrimitive } from "cmdk-solid";
 import type { ComponentProps, VoidProps } from "solid-js";
 import { splitProps } from "solid-js";
-import { Dialog, DialogContent } from "./dialog";
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle,
+} from "./dialog";
 
 export const Command = (props: CommandRootProps) => {
 	const [local, rest] = splitProps(props, ["class"]);
 
 	return (
 		<CommandPrimitive
+			data-slot="command"
 			class={cn(
-				"flex size-full flex-col overflow-hidden bg-popover text-popover-foreground",
+				"bg-popover text-popover-foreground flex h-full w-full flex-col overflow-hidden rounded-md",
 				local.class,
 			)}
 			{...rest}
@@ -27,17 +34,34 @@ export const Command = (props: CommandRootProps) => {
 	);
 };
 
-export const CommandList = (props: CommandListProps) => {
-	const [local, rest] = splitProps(props, ["class"]);
+export const CommandDialog = (
+	props: CommandDialogProps & {
+		title?: string;
+		description?: string;
+		className?: string;
+	},
+) => {
+	const [local, rest] = splitProps(props, [
+		"children",
+		"title",
+		"description",
+		"className",
+	]);
+	const title = local.title ?? "Command Palette";
+	const description = local.description ?? "Search for a command to run...";
 
 	return (
-		<CommandPrimitive.List
-			class={cn(
-				"max-h-[300px] overflow-y-auto overflow-x-hidden p-1",
-				local.class,
-			)}
-			{...rest}
-		/>
+		<Dialog {...rest}>
+			<DialogHeader class="sr-only">
+				<DialogTitle>{title}</DialogTitle>
+				<DialogDescription>{description}</DialogDescription>
+			</DialogHeader>
+			<DialogContent class={cn("overflow-hidden p-0", local.className)}>
+				<Command class="[&_[cmdk-group-heading]]:text-muted-foreground **:data-[slot=command-input-wrapper]:h-12 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group]]:px-2 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
+					{local.children}
+				</Command>
+			</DialogContent>
+		</Dialog>
 	);
 };
 
@@ -45,11 +69,14 @@ export const CommandInput = (props: VoidProps<CommandInputProps>) => {
 	const [local, rest] = splitProps(props, ["class"]);
 
 	return (
-		<div class="flex items-center border-b px-3" cmdk-input-wrapper="">
+		<div
+			data-slot="command-input-wrapper"
+			class="flex h-9 items-center gap-2 border-b px-3"
+		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				viewBox="0 0 24 24"
-				class="mr-2 h-4 w-4 shrink-0 opacity-50"
+				class="size-4 shrink-0 opacity-50"
 			>
 				<path
 					fill="none"
@@ -62,8 +89,9 @@ export const CommandInput = (props: VoidProps<CommandInputProps>) => {
 				<title>Search</title>
 			</svg>
 			<CommandPrimitive.Input
+				data-slot="command-input"
 				class={cn(
-					"flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
+					"placeholder:text-muted-foreground flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-hidden disabled:cursor-not-allowed disabled:opacity-50",
 					local.class,
 				)}
 				{...rest}
@@ -72,45 +100,18 @@ export const CommandInput = (props: VoidProps<CommandInputProps>) => {
 	);
 };
 
-export const CommandItem = (props: CommandItemProps) => {
+export const CommandList = (props: CommandListProps) => {
 	const [local, rest] = splitProps(props, ["class"]);
 
 	return (
-		<CommandPrimitive.Item
+		<CommandPrimitive.List
+			data-slot="command-list"
 			class={cn(
-				"relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-selected:bg-accent aria-selected:text-accent-foreground",
+				"max-h-[300px] scroll-py-1 overflow-x-hidden overflow-y-auto",
 				local.class,
 			)}
 			{...rest}
 		/>
-	);
-};
-
-export const CommandShortcut = (props: ComponentProps<"span">) => {
-	const [local, rest] = splitProps(props, ["class"]);
-
-	return (
-		<span
-			class={cn(
-				"ml-auto text-xs tracking-widest text-muted-foreground",
-				local.class,
-			)}
-			{...rest}
-		/>
-	);
-};
-
-export const CommandDialog = (props: CommandDialogProps) => {
-	const [local, rest] = splitProps(props, ["children"]);
-
-	return (
-		<Dialog {...rest}>
-			<DialogContent class="overflow-hidden p-0">
-				<Command class="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:size-5">
-					{local.children}
-				</Command>
-			</DialogContent>
-		</Dialog>
 	);
 };
 
@@ -119,6 +120,7 @@ export const CommandEmpty = (props: CommandEmptyProps) => {
 
 	return (
 		<CommandPrimitive.Empty
+			data-slot="command-empty"
 			class={cn("py-6 text-center text-sm", local.class)}
 			{...rest}
 		/>
@@ -130,8 +132,9 @@ export const CommandGroup = (props: CommandGroupProps) => {
 
 	return (
 		<CommandPrimitive.Group
+			data-slot="command-group"
 			class={cn(
-				"overflow-hidden p-1 text-foreground [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground",
+				"text-foreground [&_[cmdk-group-heading]]:text-muted-foreground overflow-hidden p-1 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium",
 				local.class,
 			)}
 			{...rest}
@@ -144,7 +147,38 @@ export const CommandSeparator = (props: CommandEmptyProps) => {
 
 	return (
 		<CommandPrimitive.Separator
-			class={cn("-mx-1 h-px bg-border", local.class)}
+			data-slot="command-separator"
+			class={cn("bg-border -mx-1 h-px", local.class)}
+			{...rest}
+		/>
+	);
+};
+
+export const CommandItem = (props: CommandItemProps) => {
+	const [local, rest] = splitProps(props, ["class"]);
+
+	return (
+		<CommandPrimitive.Item
+			data-slot="command-item"
+			class={cn(
+				"data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground [&_svg:not([class*='text-'])]:text-muted-foreground relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+				local.class,
+			)}
+			{...rest}
+		/>
+	);
+};
+
+export const CommandShortcut = (props: ComponentProps<"span">) => {
+	const [local, rest] = splitProps(props, ["class"]);
+
+	return (
+		<span
+			data-slot="command-shortcut"
+			class={cn(
+				"text-muted-foreground ml-auto text-xs tracking-widest",
+				local.class,
+			)}
 			{...rest}
 		/>
 	);

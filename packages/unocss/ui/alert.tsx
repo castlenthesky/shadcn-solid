@@ -1,20 +1,17 @@
 import { cn } from "@/libs/cn";
-import type { AlertRootProps } from "@kobalte/core/alert";
-import { Alert as AlertPrimitive } from "@kobalte/core/alert";
-import type { PolymorphicProps } from "@kobalte/core/polymorphic";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
-import type { ComponentProps, ValidComponent } from "solid-js";
+import type { ComponentProps } from "solid-js";
 import { splitProps } from "solid-js";
 
 export const alertVariants = cva(
-	"relative w-full rounded-lg border px-4 py-3 text-sm [&:has(svg)]:pl-11 [&>svg+div]:translate-y-[-3px] [&>svg]:(absolute left-4 top-4 text-foreground)",
+	"relative w-full rounded-lg border px-4 py-3 text-sm grid has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] grid-cols-[0_1fr] has-[>svg]:gap-x-3 gap-y-0.5 items-start [&>svg]:size-4 [&>svg]:translate-y-0.5 [&>svg]:text-current",
 	{
 		variants: {
 			variant: {
-				default: "bg-background text-foreground",
+				default: "bg-card text-card-foreground",
 				destructive:
-					"border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive",
+					"text-destructive bg-card [&>svg]:text-current *:data-[slot=alert-description]:text-destructive/90",
 			},
 		},
 		defaultVariants: {
@@ -23,24 +20,19 @@ export const alertVariants = cva(
 	},
 );
 
-type alertProps<T extends ValidComponent = "div"> = AlertRootProps<T> &
+type alertProps = ComponentProps<"div"> &
 	VariantProps<typeof alertVariants> & {
 		class?: string;
 	};
 
-export const Alert = <T extends ValidComponent = "div">(
-	props: PolymorphicProps<T, alertProps<T>>,
-) => {
-	const [local, rest] = splitProps(props as alertProps, ["class", "variant"]);
+export const Alert = (props: alertProps) => {
+	const [local, rest] = splitProps(props, ["class", "variant"]);
 
 	return (
-		<AlertPrimitive
-			class={cn(
-				alertVariants({
-					variant: props.variant,
-				}),
-				local.class,
-			)}
+		<div
+			data-slot="alert"
+			role="alert"
+			class={cn(alertVariants({ variant: local.variant }), local.class)}
 			{...rest}
 		/>
 	);
@@ -51,7 +43,11 @@ export const AlertTitle = (props: ComponentProps<"div">) => {
 
 	return (
 		<div
-			class={cn("font-medium leading-5 tracking-tight", local.class)}
+			data-slot="alert-title"
+			class={cn(
+				"col-start-2 line-clamp-1 min-h-4 font-medium tracking-tight",
+				local.class,
+			)}
 			{...rest}
 		/>
 	);
@@ -61,6 +57,13 @@ export const AlertDescription = (props: ComponentProps<"div">) => {
 	const [local, rest] = splitProps(props, ["class"]);
 
 	return (
-		<div class={cn("text-sm [&_p]:leading-relaxed", local.class)} {...rest} />
+		<div
+			data-slot="alert-description"
+			class={cn(
+				"text-muted-foreground col-start-2 grid justify-items-start gap-1 text-sm [&_p]:leading-relaxed",
+				local.class,
+			)}
+			{...rest}
+		/>
 	);
 };

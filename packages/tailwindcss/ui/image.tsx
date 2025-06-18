@@ -13,13 +13,14 @@ type imageRootProps<T extends ValidComponent = "span"> = ImageRootProps<T> & {
 	class?: string;
 };
 
-export const ImageRoot = <T extends ValidComponent = "span">(
+function ImageRoot<T extends ValidComponent = "span">(
 	props: PolymorphicProps<T, imageRootProps<T>>,
-) => {
+) {
 	const [local, rest] = splitProps(props as imageRootProps, ["class"]);
 
 	return (
 		<ImagePrimitive
+			data-slot="image-root"
 			class={cn(
 				"relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full",
 				local.class,
@@ -27,37 +28,39 @@ export const ImageRoot = <T extends ValidComponent = "span">(
 			{...rest}
 		/>
 	);
-};
+}
 
 type imageProps<T extends ValidComponent = "img"> = ImageImgProps<T> & {
 	class?: string;
 };
 
-export const Image = <T extends ValidComponent = "img">(
+function Image<T extends ValidComponent = "img">(
 	props: PolymorphicProps<T, imageProps<T>>,
-) => {
+) {
 	const [local, rest] = splitProps(props as imageProps, ["class"]);
 
 	return (
 		<ImagePrimitive.Img
+			data-slot="image"
 			class={cn("aspect-square h-full w-full", local.class)}
 			{...rest}
 		/>
 	);
-};
+}
 
 type imageFallbackProps<T extends ValidComponent = "span"> =
 	ImageFallbackProps<T> & {
 		class?: string;
 	};
 
-export const ImageFallback = <T extends ValidComponent = "span">(
+function ImageFallback<T extends ValidComponent = "span">(
 	props: PolymorphicProps<T, imageFallbackProps<T>>,
-) => {
+) {
 	const [local, rest] = splitProps(props as imageFallbackProps, ["class"]);
 
 	return (
 		<ImagePrimitive.Fallback
+			data-slot="image-fallback"
 			class={cn(
 				"flex h-full w-full items-center justify-center rounded-full bg-muted",
 				local.class,
@@ -65,4 +68,6 @@ export const ImageFallback = <T extends ValidComponent = "span">(
 			{...rest}
 		/>
 	);
-};
+}
+
+export { ImageRoot, Image, ImageFallback };

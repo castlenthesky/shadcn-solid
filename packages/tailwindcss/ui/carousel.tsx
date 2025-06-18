@@ -3,9 +3,7 @@ import type { CreateEmblaCarouselType } from "embla-carousel-solid";
 import createEmblaCarousel from "embla-carousel-solid";
 import type {
 	Accessor,
-	ComponentProps,
-	ParentProps,
-	VoidProps,
+	ComponentProps, VoidProps
 } from "solid-js";
 import {
 	createContext,
@@ -54,10 +52,8 @@ const useCarousel = () => {
 	return context();
 };
 
-export const Carousel = (props: ComponentProps<"div"> & CarouselProps) => {
-	const merge = mergeProps<
-		ParentProps<ComponentProps<"div"> & CarouselProps>[]
-	>({ orientation: "horizontal" }, props);
+export const Carousel = (props: ComponentProps<"section"> & CarouselProps) => {
+	const merge = mergeProps({ orientation: "horizontal" }, props);
 
 	const [local, rest] = splitProps(merge, [
 		"orientation",
@@ -123,8 +119,9 @@ export const Carousel = (props: ComponentProps<"div"> & CarouselProps) => {
 				api,
 				opts: local.opts,
 				orientation:
-					local.orientation ||
-					(local.opts?.axis === "y" ? "vertical" : "horizontal"),
+					local.orientation === "vertical"
+						? "vertical"
+						: "horizontal",
 				scrollPrev,
 				scrollNext,
 				canScrollPrev,
@@ -134,15 +131,16 @@ export const Carousel = (props: ComponentProps<"div"> & CarouselProps) => {
 
 	return (
 		<CarouselContext.Provider value={value}>
-			<div
+			<section
 				onKeyDown={handleKeyDown}
 				class={cn("relative", local.class)}
 				role="region"
 				aria-roledescription="carousel"
+				data-slot="carousel"
 				{...rest}
 			>
 				{local.children}
-			</div>
+			</section>
 		</CarouselContext.Provider>
 	);
 };
@@ -152,7 +150,7 @@ export const CarouselContent = (props: ComponentProps<"div">) => {
 	const { carouselRef, orientation } = useCarousel();
 
 	return (
-		<div ref={carouselRef} class="overflow-hidden">
+		<div ref={carouselRef} class="overflow-hidden" data-slot="carousel-content">
 			<div
 				class={cn(
 					"flex",
@@ -173,6 +171,7 @@ export const CarouselItem = (props: ComponentProps<"div">) => {
 		<div
 			role="group"
 			aria-roledescription="slide"
+			data-slot="carousel-item"
 			class={cn(
 				"min-w-0 shrink-0 grow-0 basis-full",
 				orientation === "horizontal" ? "pl-4" : "pt-4",
@@ -195,12 +194,13 @@ export const CarouselPrevious = (
 
 	return (
 		<Button
+			data-slot="carousel-previous"
 			variant={local.variant}
 			size={local.size}
 			class={cn(
-				"absolute  h-8 w-8 touch-manipulation rounded-full",
+				"absolute size-8 rounded-full",
 				orientation === "horizontal"
-					? "-left-12 top-1/2 -translate-y-1/2"
+					? "top-1/2 -left-12 -translate-y-1/2"
 					: "-top-12 left-1/2 -translate-x-1/2 rotate-90",
 				local.class,
 			)}
@@ -211,18 +211,17 @@ export const CarouselPrevious = (
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
 				class="size-4"
 			>
-				<path
-					fill="none"
-					stroke="currentColor"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="2"
-					d="M5 12h14M5 12l6 6m-6-6l6-6"
-				/>
 				<title>Previous slide</title>
+				<path d="m15 18-6-6 6-6" />
 			</svg>
+			<span class="sr-only">Previous slide</span>
 		</Button>
 	);
 };
@@ -239,12 +238,13 @@ export const CarouselNext = (
 
 	return (
 		<Button
+			data-slot="carousel-next"
 			variant={local.variant}
 			size={local.size}
 			class={cn(
-				"absolute h-8 w-8 touch-manipulation rounded-full",
+				"absolute size-8 rounded-full",
 				orientation === "horizontal"
-					? "-right-12 top-1/2 -translate-y-1/2"
+					? "top-1/2 -right-12 -translate-y-1/2"
 					: "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
 				local.class,
 			)}
@@ -255,18 +255,17 @@ export const CarouselNext = (
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
 				class="size-4"
 			>
-				<path
-					fill="none"
-					stroke="currentColor"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="2"
-					d="M5 12h14m-4 4l4-4m-4-4l4 4"
-				/>
 				<title>Next slide</title>
+				<path d="m9 18 6-6-6-6" />
 			</svg>
+			<span class="sr-only">Next slide</span>
 		</Button>
 	);
 };

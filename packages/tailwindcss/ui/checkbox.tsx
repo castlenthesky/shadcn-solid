@@ -24,19 +24,23 @@ export const CheckboxControl = <T extends ValidComponent = "div">(
 
 	return (
 		<>
-			<CheckboxPrimitive.Input class="[&:focus-visible+div]:outline-none [&:focus-visible+div]:ring-[1.5px] [&:focus-visible+div]:ring-ring [&:focus-visible+div]:ring-offset-2 [&:focus-visible+div]:ring-offset-background" />
+			<CheckboxPrimitive.Input class="[&:focus-visible+div]:outline-none [&:focus-visible+div]:ring-[3px] [&:focus-visible+div]:ring-ring/50 [&:focus-visible+div]:border-ring aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive" />
 			<CheckboxPrimitive.Control
+				data-slot="checkbox"
 				class={cn(
-					"h-4 w-4 shrink-0 rounded-sm border border-primary shadow transition-shadow focus-visible:outline-none focus-visible:ring-[1.5px] focus-visible:ring-ring data-[disabled]:cursor-not-allowed data-[checked]:bg-primary data-[checked]:text-primary-foreground data-[disabled]:opacity-50",
+					"peer border-input dark:bg-input/30 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground dark:data-[state=checked]:bg-primary data-[state=checked]:border-primary focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive size-4 shrink-0 rounded-[4px] border shadow-xs transition-shadow outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50",
 					local.class,
 				)}
 				{...rest}
 			>
-				<CheckboxPrimitive.Indicator class="flex items-center justify-center text-current">
+				<CheckboxPrimitive.Indicator
+					data-slot="checkbox-indicator"
+					class="flex items-center justify-center text-current transition-none"
+				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						viewBox="0 0 24 24"
-						class="h-4 w-4"
+						class="size-3.5"
 					>
 						<path
 							fill="none"
