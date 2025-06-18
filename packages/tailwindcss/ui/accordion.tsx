@@ -21,7 +21,11 @@ export const AccordionItem = <T extends ValidComponent = "div">(
 	const [local, rest] = splitProps(props as accordionItemProps, ["class"]);
 
 	return (
-		<AccordionPrimitive.Item class={cn("border-b", local.class)} {...rest} />
+		<AccordionPrimitive.Item
+			data-slot="accordion-item"
+			class={cn("border-b last:border-b-0", local.class)}
+			{...rest}
+		/>
 	);
 };
 
@@ -42,8 +46,9 @@ export const AccordionTrigger = <T extends ValidComponent = "button">(
 	return (
 		<AccordionPrimitive.Header class="flex" as="div">
 			<AccordionPrimitive.Trigger
+				data-slot="accordion-trigger"
 				class={cn(
-					"flex flex-1 items-center justify-between py-4 text-sm font-medium transition-shadow hover:underline focus-visible:outline-none focus-visible:ring-[1.5px] focus-visible:ring-ring [&[data-expanded]>svg]:rotate-180",
+					"focus-visible:border-ring focus-visible:ring-ring/50 flex flex-1 items-start justify-between gap-4 rounded-md py-4 text-left text-sm font-medium transition-all outline-none hover:underline focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&[data-expanded]>svg]:rotate-180",
 					local.class,
 				)}
 				{...rest}
@@ -52,7 +57,7 @@ export const AccordionTrigger = <T extends ValidComponent = "button">(
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 24 24"
-					class="h-4 w-4 text-muted-foreground transition-transform duration-200"
+					class="text-muted-foreground pointer-events-none size-4 shrink-0 translate-y-0.5 transition-transform duration-200"
 				>
 					<path
 						fill="none"
@@ -85,13 +90,11 @@ export const AccordionContent = <T extends ValidComponent = "div">(
 
 	return (
 		<AccordionPrimitive.Content
-			class={cn(
-				"animate-accordion-up overflow-hidden text-sm data-[expanded]:animate-accordion-down",
-				local.class,
-			)}
+			data-slot="accordion-content"
+			class="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden text-sm"
 			{...rest}
 		>
-			<div class="pb-4 pt-0">{local.children}</div>
+			<div class={cn("pt-0 pb-4", local.class)}>{local.children}</div>
 		</AccordionPrimitive.Content>
 	);
 };
