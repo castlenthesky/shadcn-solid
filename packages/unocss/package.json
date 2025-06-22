@@ -4,9 +4,7 @@
 	"exports": {
 		"./ui/*": "./ui/*.tsx"
 	},
-	"files": [
-		"ui"
-	],
+	"files": ["ui"],
 	"devDependencies": {
 		"@ark-ui/solid": "^4.3.0",
 		"@corvu/drawer": "^0.2.2",
