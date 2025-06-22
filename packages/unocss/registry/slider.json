@@ -1,0 +1,19 @@
+{
+	"name": "slider",
+	"type": "component:ui",
+	"registryDependencies": [],
+	"dependencies": ["@kobalte/core"],
+	"devDependencies": [],
+	"unocss": {
+		"config": {
+			"plugins": []
+		}
+	},
+	"cssVars": {},
+	"files": [
+		{
+			"name": "slider.tsx",
+			"content": "./slider.tsx"
+		}
+	]
+}

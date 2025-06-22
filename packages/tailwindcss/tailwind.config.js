@@ -1,7 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./ui/*.tsx"],
-  theme: {
+	darkMode: ["class"],
+	content: ["./ui/*.tsx"],
+	theme: {
 		extend: {
 			colors: {
 				border: "hsl(var(--border))",
@@ -18,8 +19,8 @@ export default {
 					foreground: "hsl(var(--secondary-foreground))",
 				},
 				destructive: {
-					DEFAULT: "hsl(var(--destructive))",
-					foreground: "hsl(var(--destructive-foreground))",
+					DEFAULT: "hsl(var(--destructive) / <alpha-value>)",
+					foreground: "hsl(var(--destructive-foreground) / <alpha-value>)",
 				},
 				muted: {
 					DEFAULT: "hsl(var(--muted))",
@@ -37,8 +38,19 @@ export default {
 					DEFAULT: "hsl(var(--card))",
 					foreground: "hsl(var(--card-foreground))",
 				},
+				sidebar: {
+					DEFAULT: "hsl(var(--sidebar-background))",
+					foreground: "hsl(var(--sidebar-foreground))",
+					primary: "hsl(var(--sidebar-primary))",
+					"primary-foreground": "hsl(var(--sidebar-primary-foreground))",
+					accent: "hsl(var(--sidebar-accent))",
+					"accent-foreground": "hsl(var(--sidebar-accent-foreground))",
+					border: "hsl(var(--sidebar-border))",
+					ring: "hsl(var(--sidebar-ring))",
+				},
 			},
 			borderRadius: {
+				xl: "calc(var(--radius) + 4px)",
 				lg: "var(--radius)",
 				md: "calc(var(--radius) - 2px)",
 				sm: "calc(var(--radius) - 4px)",
@@ -74,6 +86,8 @@ export default {
 			},
 		},
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [
+		require("tailwindcss-animate"),
+		require("@tailwindcss/container-queries"),
+	],
 }
-

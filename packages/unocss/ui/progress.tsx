@@ -2,35 +2,38 @@ import { cn } from "@/libs/cn";
 import type { PolymorphicProps } from "@kobalte/core/polymorphic";
 import type { ProgressRootProps } from "@kobalte/core/progress";
 import { Progress as ProgressPrimitive } from "@kobalte/core/progress";
-import type { ParentProps, ValidComponent } from "solid-js";
+import type { ValidComponent } from "solid-js";
 import { splitProps } from "solid-js";
 
-export const ProgressLabel = ProgressPrimitive.Label;
-export const ProgressValueLabel = ProgressPrimitive.ValueLabel;
-
-type progressProps<T extends ValidComponent = "div"> = ParentProps<
-	ProgressRootProps<T> & {
-		class?: string;
-	}
->;
+type progressProps<T extends ValidComponent = "div"> = ProgressRootProps<T> & {
+	class?: string;
+	value?: number;
+};
 
 export const Progress = <T extends ValidComponent = "div">(
 	props: PolymorphicProps<T, progressProps<T>>,
 ) => {
-	const [local, rest] = splitProps(props as progressProps, [
-		"class",
-		"children",
-	]);
+	const [local, rest] = splitProps(props as progressProps, ["class", "value"]);
 
 	return (
 		<ProgressPrimitive
-			class={cn("flex w-full flex-col gap-2", local.class)}
+			data-slot="progress"
+			class={cn(
+				"bg-primary/20 relative h-2 w-full overflow-hidden rounded-full",
+				local.class,
+			)}
+			value={local.value}
 			{...rest}
 		>
-			{local.children}
-			<ProgressPrimitive.Track class="h-2 overflow-hidden rounded-full bg-primary/20">
-				<ProgressPrimitive.Fill class="h-full w-[--kb-progress-fill-width] bg-primary transition-all duration-500 ease-linear data-[progress=complete]:bg-primary" />
-			</ProgressPrimitive.Track>
+			<ProgressPrimitive.Fill
+				data-slot="progress-indicator"
+				class="bg-primary h-full w-full flex-1 transition-all"
+				style={{
+					transform: `translateX(-${100 - (local.value || 0)}%)`,
+				}}
+			/>
 		</ProgressPrimitive>
 	);
 };
+
+export { Progress };

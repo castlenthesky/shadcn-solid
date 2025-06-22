@@ -26,13 +26,17 @@ export const CheckboxControl = <T extends ValidComponent = "div">(
 		<>
 			<CheckboxPrimitive.Input class="[&:focus-visible+div]:(outline-none ring-1.5 ring-ring ring-offset-2 ring-offset-background)" />
 			<CheckboxPrimitive.Control
+				data-slot="checkbox"
 				class={cn(
 					"h-4 w-4 shrink-0 rounded-sm border border-primary shadow focus-visible:(outline-none ring-1.5 ring-ring) data-[disabled]:(cursor-not-allowed opacity-50) data-[checked]:(bg-primary text-primary-foreground) transition-shadow",
 					local.class,
 				)}
 				{...rest}
 			>
-				<CheckboxPrimitive.Indicator class="flex items-center justify-center text-current">
+				<CheckboxPrimitive.Indicator
+					data-slot="checkbox-indicator"
+					class="flex items-center justify-center text-current"
+				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						viewBox="0 0 24 24"

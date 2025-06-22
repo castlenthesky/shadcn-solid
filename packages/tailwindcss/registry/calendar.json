@@ -1,0 +1,19 @@
+{
+	"name": "calendar",
+	"type": "component:ui",
+	"registryDependencies": ["button"],
+	"dependencies": ["@corvu/calendar", "class-variance-authority"],
+	"devDependencies": [],
+	"tailwind": {
+		"config": {
+			"plugins": []
+		}
+	},
+	"cssVars": {},
+	"files": [
+		{
+			"name": "calendar.tsx",
+			"content": "./calendar.tsx"
+		}
+	]
+}

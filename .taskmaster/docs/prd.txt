@@ -1,0 +1,239 @@
+# Product Requirements Document: shadcn-solid Component Parity
+
+## 1. Overview
+
+The goal of this project is to bring the `shadcn-solid` component library to full parity with the `shadcn-ui` (React) library. This involves implementing all missing components and ensuring the CLI provides a consistent and seamless installation experience for developers.
+
+## 2. Project Goals
+
+- Achieve 100% component parity with `shadcn-ui`.
+- Ensure all components are fully functional, accessible, and stylistically consistent with the existing `shadcn-solid` library.
+- Verify that the `shadcn-solid` CLI can install all components correctly.
+- Enhance the CLI if necessary to match the functionality of the `shadcn-ui` CLI.
+
+## 3. Scope
+
+### 3.1. Missing Components
+
+The following components from `shadcn-ui` need to be implemented in `shadcn-solid`:
+
+1.  **Aspect Ratio**: A container that maintains a specific aspect ratio.
+2.  **Avatar**: An image element with fallback states, typically used for user profiles.
+3.  **Breadcrumb**: A navigation element that shows the user's location in a site or app.
+4.  **Calendar**: A component for selecting dates.
+5.  **Chart**: Components for data visualization (e.g., bar, line, pie charts).
+6.  **Form**: A wrapper for building accessible and validated forms.
+7.  **Input**: A standard text input field.
+8.  **Label**: An accessible label for form elements.
+9.  **Scroll Area**: A container with a custom scrollbar.
+10. **Sidebar**: A vertical navigation component.
+11. **Slider**: A control for selecting a value from a range.
+
+### 3.2. CLI Enhancements
+
+- **Evaluation**: The `shadcn-solid` CLI's `add` command must be verified to work for all new and existing components.
+- **Enhancement**: If the `add` command is insufficient, or if other commands from `shadcn-ui`'s CLI (`build`, `info`, `migrate`) are deemed necessary for feature parity, they will be implemented.
+
+## 4. Implementation Plan
+
+For each missing component, the following tasks must be completed:
+
+- **Implementation**: Create the SolidJS component, ensuring it is composable and follows Solid's best practices. This will involve adapting the original React component's logic and structure. Dependencies will be mapped from Radix UI (for React) to Kobalte or other Solid-native libraries.
+- **Styling**: Ensure the component's styling matches the `shadcn` aesthetic and is consistent with existing `shadcn-solid` components.
+- **Examples**: Create documentation examples demonstrating the component's usage and features.
+- **Registry**: Add the component to the `shadcn-solid` registry so it can be installed via the CLI.
+- **Documentation**: Write clear and concise documentation for the component, including props, usage, and examples.
+
+## 5. Non-Goals
+
+- This project will not introduce new components that are not already in `shadcn-ui`.
+- This project will not redesign the existing `shadcn-solid` components.
+- This project will not fundamentally change the architecture of the `shadcn-solid` CLI, only extend it for parity.
+
+# Overview
+This project aims to create a comprehensive 1:1 port of shadcn-ui components to work natively with SolidJS. The goal is to provide SolidJS developers with the same high-quality, accessible, and customizable UI components that React developers enjoy with shadcn-ui. The project will maintain feature parity, styling consistency, and naming conventions while adapting to SolidJS's reactive patterns and component architecture.
+
+# Core Features
+## Component Library Parity
+- Port all React shadcn-ui components to SolidJS with identical functionality
+- Maintain the same component API surface where possible
+- Preserve all accessibility features and ARIA attributes
+- Support both Tailwind CSS and UnoCSS styling systems
+
+## Style System Compatibility
+- Exact CSS class matching with original shadcn components
+- Support for theme customization and CSS variables
+- Responsive design patterns consistent with original implementation
+- Dark mode support with seamless theme switching
+
+## Developer Experience
+- Identical composition patterns and component structure
+- Same naming conventions for props, slots, and methods
+- Compatible installation and setup process
+- Comprehensive documentation and examples
+
+## Framework Integration
+- Native SolidJS reactivity patterns
+- Proper signal handling and reactive updates
+- SolidJS-specific optimizations (fine-grained reactivity)
+- Integration with SolidJS ecosystem tools
+
+# User Experience
+## Developer Personas
+- **SolidJS Developers**: Primary users who want shadcn-quality components for SolidJS projects
+- **React to SolidJS Migrators**: Developers transitioning from React who expect familiar component APIs
+- **Design System Builders**: Teams creating consistent UI libraries for SolidJS applications
+
+## Key User Flows
+1. **Installation**: npm/pnpm install process identical to React shadcn
+2. **Component Usage**: Import and use components with same API as React version
+3. **Customization**: Apply themes and customize styling using same patterns
+4. **Composition**: Combine components using same composition strategies
+
+## UI/UX Considerations
+- Visual output must be pixel-perfect match with React shadcn components
+- Interactive behaviors (hover, focus, animations) must be identical
+- Performance should meet or exceed React version due to SolidJS efficiency
+
+# Technical Architecture
+## System Components
+- **Core Components**: Basic UI elements (Button, Input, Card, etc.)
+- **Complex Components**: Advanced components (DataTable, Command, Combobox, etc.)
+- **Utility Components**: Layout and helper components (Separator, Skeleton, etc.)
+- **Form Components**: Form-specific elements with validation support
+
+## Data Models
+- Component prop interfaces matching React shadcn exactly
+- Theme configuration objects for styling systems
+- Accessibility state management for complex components
+
+## APIs and Integrations
+- SolidJS Primitives integration for accessibility
+- Tailwind CSS / UnoCSS integration
+- TypeScript support with proper type definitions
+- Build system integration (Vite, Rollup, etc.)
+
+## Infrastructure Requirements
+- Package structure supporting both Tailwind and UnoCSS variants
+- Build pipeline for component distribution
+- Documentation site for component showcase
+- Testing infrastructure for component validation
+
+# Development Roadmap
+## Phase 1: Foundation Components (MVP)
+- Button (all variants)
+- Input/TextField
+- Card
+- Badge
+- Separator
+- Skeleton
+These provide the basic building blocks and establish the development patterns.
+
+## Phase 2: Core UI Components
+- Alert/AlertDialog
+- Dialog/Sheet
+- Dropdown Menu
+- Popover
+- Tooltip
+- Toast/Sonner
+- Tabs
+- Switch
+- Checkbox
+- Radio Group
+These components provide essential UI functionality for most applications.
+
+## Phase 3: Advanced Components
+- Select/Combobox
+- Command
+- Data Table
+- Date Picker
+- Navigation Menu
+- Menubar
+- Context Menu
+- Carousel
+These components provide advanced functionality and complex interactions.
+
+## Phase 4: Specialized Components
+- Progress
+- Slider/Range
+- Toggle/Toggle Group
+- Accordion
+- Collapsible
+- Resizable
+- OTP Field
+- Number Field
+These components provide specialized functionality for specific use cases.
+
+## Phase 5: Integration & Polish
+- Complete documentation
+- Example applications
+- Performance optimization
+- Testing coverage
+- Migration guides
+
+# Logical Dependency Chain
+## Foundation First
+1. **Development Infrastructure**: Set up build system, testing, and development environment
+2. **Core Utilities**: Implement utility functions (cn, variants, etc.)
+3. **Base Components**: Start with simplest components (Button, Badge, Separator)
+
+## Building Complexity
+4. **Layout Components**: Card, Container, Grid systems
+5. **Form Elements**: Input, Textarea, Checkbox, Radio, Switch
+6. **Feedback Components**: Alert, Toast, Progress, Skeleton
+7. **Overlay Components**: Dialog, Popover, Tooltip, Sheet
+8. **Navigation Components**: Tabs, Menu systems, Breadcrumbs
+9. **Data Components**: Table, Select, Combobox, Command
+10. **Advanced Interactions**: Drag & Drop, Resizable, Complex forms
+
+## Integration Points
+- Each component should be usable independently
+- Complex components can depend on simpler ones
+- Styling system must be established before any visual components
+- Accessibility patterns should be consistent across all components
+
+# Risks and Mitigations
+## Technical Challenges
+- **Risk**: SolidJS reactivity patterns may not translate directly from React hooks
+- **Mitigation**: Study SolidJS primitives library patterns and create similar abstractions
+
+- **Risk**: Event handling differences between React and SolidJS
+- **Mitigation**: Create event handling utilities that normalize behavior
+
+- **Risk**: Styling system integration complexity
+- **Mitigation**: Start with Tailwind implementation, then adapt to UnoCSS
+
+## MVP Definition
+- **Risk**: Scope creep leading to incomplete components
+- **Mitigation**: Focus on core 10-15 components first, ensure they're production-ready
+
+- **Risk**: Maintaining API compatibility while adapting to SolidJS patterns
+- **Mitigation**: Create compatibility layer where necessary, document differences clearly
+
+## Resource Constraints
+- **Risk**: Time to port all 40+ components
+- **Mitigation**: Prioritize by usage frequency, automate where possible
+
+- **Risk**: Maintaining feature parity as React shadcn evolves
+- **Mitigation**: Establish automated comparison testing, regular sync process
+
+# Appendix
+## Research Findings
+- SolidJS primitives library provides excellent accessibility foundation
+- Tailwind CSS works identically in SolidJS as in React
+- SolidJS's fine-grained reactivity can improve performance over React
+- Component composition patterns translate well between frameworks
+
+## Technical Specifications
+- **Target SolidJS Version**: 1.8+
+- **TypeScript**: Full TypeScript support required
+- **Styling**: Tailwind CSS 3.x, UnoCSS support
+- **Build Target**: ES2020+, CommonJS and ESM distribution
+- **Browser Support**: Modern browsers (Chrome 90+, Firefox 88+, Safari 14+)
+
+## Success Metrics
+- All React shadcn components have SolidJS equivalents
+- Visual regression tests pass at 100%
+- Performance benchmarks meet or exceed React version
+- Developer satisfaction surveys show positive adoption
+- Community contribution and usage growth

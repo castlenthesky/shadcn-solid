@@ -1,0 +1,168 @@
+---
+title: Label
+description: Renders an accessible label associated with controls.
+component: true
+---
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@repo/tailwindcss/ui/tabs"
+
+<Tabs defaultValue="preview" class="relative mr-auto w-full">
+  <div class="flex items-center justify-between pb-3">
+    <TabsList class="w-full justify-start rounded-none border-b bg-transparent p-0">
+      <TabsTrigger value="preview" class="relative h-9 rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none">
+        Preview
+      </TabsTrigger>
+      <TabsTrigger value="code" class="relative h-9 rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none">
+        Code
+      </TabsTrigger>
+    </TabsList>
+  </div>
+  <TabsContent value="preview" class="relative rounded-md border">
+    <div class="flex h-[350px] w-full items-center justify-center p-10">
+      <example>label-demo</example>
+    </div>
+  </TabsContent>
+  <TabsContent value="code">
+    <div class="flex flex-col space-y-4">
+      <div class="w-full rounded-md [&_pre]:my-0 [&_pre]:max-h-[350px] [&_pre]:overflow-auto">
+        ```tsx
+        import { Checkbox, CheckboxControl } from "@repo/tailwindcss/ui/checkbox"
+        import { Label } from "@repo/tailwindcss/ui/label"
+
+        export default function LabelDemo() {
+          return (
+            <div class="flex items-center space-x-2">
+              <Checkbox>
+                <CheckboxControl id="terms" />
+              </Checkbox>
+              <Label for="terms">Accept terms and conditions</Label>
+            </div>
+          )
+        }
+        ```
+      </div>
+    </div>
+  </TabsContent>
+</Tabs>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+<TabsTrigger value="cli">CLI</TabsTrigger>
+<TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn-solid@latest add label
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="label" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import { Label } from "@/components/ui/label"
+```
+
+```tsx
+<Label for="email">Your email address</Label>
+```
+
+## Examples
+
+### Default
+
+<Tabs defaultValue="preview" class="relative mr-auto w-full">
+  <div class="flex items-center justify-between pb-3">
+    <TabsList class="w-full justify-start rounded-none border-b bg-transparent p-0">
+      <TabsTrigger value="preview">Preview</TabsTrigger>
+      <TabsTrigger value="code">Code</TabsTrigger>
+    </TabsList>
+  </div>
+  <TabsContent value="preview" class="relative rounded-md border">
+    <div class="flex h-[200px] w-full items-center justify-center p-10">
+      <example>label-demo</example>
+    </div>
+  </TabsContent>
+  <TabsContent value="code">
+    ```tsx
+    import { Checkbox, CheckboxControl } from "@repo/tailwindcss/ui/checkbox"
+    import { Label } from "@repo/tailwindcss/ui/label"
+
+    export default function LabelDemo() {
+      return (
+        <div class="flex items-center space-x-2">
+          <Checkbox>
+            <CheckboxControl id="terms" />
+          </Checkbox>
+          <Label for="terms">Accept terms and conditions</Label>
+        </div>
+      )
+    }
+    ```
+  </TabsContent>
+</Tabs>
+
+### With Input
+
+<Tabs defaultValue="preview" class="relative mr-auto w-full">
+  <div class="flex items-center justify-between pb-3">
+    <TabsList class="w-full justify-start rounded-none border-b bg-transparent p-0">
+      <TabsTrigger value="preview">Preview</TabsTrigger>
+      <TabsTrigger value="code">Code</TabsTrigger>
+    </TabsList>
+  </div>
+  <TabsContent value="preview" class="relative rounded-md border">
+    <div class="flex h-[200px] w-full items-center justify-center p-10">
+      <example>input-with-label</example>
+    </div>
+  </TabsContent>
+  <TabsContent value="code">
+    ```tsx
+    import { Label } from "@repo/tailwindcss/ui/label"
+    import { TextField, TextFieldInput } from "@repo/tailwindcss/ui/textfield"
+
+    export default function InputWithLabel() {
+      return (
+        <div class="grid w-full max-w-sm items-center gap-3">
+          <Label for="email">Email</Label>
+          <TextField>
+            <TextFieldInput type="email" id="email" placeholder="Email" />
+          </TextField>
+        </div>
+      )
+    }
+    ```
+  </TabsContent>
+</Tabs>
+
+## API Reference
+
+### Label
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `for` | `string` | `undefined` | The id of the element the label is associated with |
+| `class` | `string` | `undefined` | Additional CSS classes |
+| `children` | `JSX.Element` | `undefined` | The label text content |
+
+The Label component extends the native HTML `<label>` element, so all standard label attributes and events are supported.

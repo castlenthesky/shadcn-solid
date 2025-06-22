@@ -1,0 +1,18 @@
+{
+	"name": "data-table",
+	"dependencies": ["solid-js", "@tanstack/solid-table"],
+	"registryDependencies": [
+		"button",
+		"input",
+		"select",
+		"dropdown-menu",
+		"table"
+	],
+	"files": [
+		{
+			"name": "data-table.tsx",
+			"content": "// Comprehensive DataTable component for SolidJS with TanStack Table integration\n// See packages/tailwindcss/ui/data-table.tsx for full implementation\nexport * from \"../../../packages/tailwindcss/ui/data-table\";"
+		}
+	],
+	"type": "components:ui"
+}

@@ -5,8 +5,9 @@ export const Table = (props: ComponentProps<"table">) => {
 	const [local, rest] = splitProps(props, ["class"]);
 
 	return (
-		<div class="w-full overflow-auto">
+		<div data-slot="table-container" class="relative w-full overflow-x-auto">
 			<table
+				data-slot="table"
 				class={cn("w-full caption-bottom text-sm", local.class)}
 				{...rest}
 			/>
@@ -17,14 +18,24 @@ export const Table = (props: ComponentProps<"table">) => {
 export const TableHeader = (props: ComponentProps<"thead">) => {
 	const [local, rest] = splitProps(props, ["class"]);
 
-	return <thead class={cn("[&_tr]:border-b", local.class)} {...rest} />;
+	return (
+		<thead
+			data-slot="table-header"
+			class={cn("[&_tr]:border-b", local.class)}
+			{...rest}
+		/>
+	);
 };
 
 export const TableBody = (props: ComponentProps<"tbody">) => {
 	const [local, rest] = splitProps(props, ["class"]);
 
 	return (
-		<tbody class={cn("[&_tr:last-child]:border-0", local.class)} {...rest} />
+		<tbody
+			data-slot="table-body"
+			class={cn("[&_tr:last-child]:border-0", local.class)}
+			{...rest}
+		/>
 	);
 };
 
@@ -32,8 +43,12 @@ export const TableFooter = (props: ComponentProps<"tfoot">) => {
 	const [local, rest] = splitProps(props, ["class"]);
 
 	return (
-		<tbody
-			class={cn("bg-primary font-medium text-primary-foreground", local.class)}
+		<tfoot
+			data-slot="table-footer"
+			class={cn(
+				"bg-muted/50 border-t font-medium [&>tr]:last:border-b-0",
+				local.class,
+			)}
 			{...rest}
 		/>
 	);
@@ -44,8 +59,9 @@ export const TableRow = (props: ComponentProps<"tr">) => {
 
 	return (
 		<tr
+			data-slot="table-row"
 			class={cn(
-				"border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
+				"hover:bg-muted/50 data-[state=selected]:bg-muted border-b transition-colors",
 				local.class,
 			)}
 			{...rest}
@@ -58,8 +74,9 @@ export const TableHead = (props: ComponentProps<"th">) => {
 
 	return (
 		<th
+			data-slot="table-head"
 			class={cn(
-				"h-10 px-2 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
+				"text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
 				local.class,
 			)}
 			{...rest}
@@ -72,8 +89,9 @@ export const TableCell = (props: ComponentProps<"td">) => {
 
 	return (
 		<td
+			data-slot="table-cell"
 			class={cn(
-				"p-2 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
+				"p-2 align-middle whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
 				local.class,
 			)}
 			{...rest}
@@ -86,6 +104,7 @@ export const TableCaption = (props: ComponentProps<"caption">) => {
 
 	return (
 		<caption
+			data-slot="table-caption"
 			class={cn("mt-4 text-sm text-muted-foreground", local.class)}
 			{...rest}
 		/>

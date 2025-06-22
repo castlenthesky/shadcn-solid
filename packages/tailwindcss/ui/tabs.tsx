@@ -24,6 +24,7 @@ export const Tabs = <T extends ValidComponent = "div">(
 
 	return (
 		<TabsPrimitive
+			data-slot="tabs"
 			class={cn("w-full data-[orientation=vertical]:flex", local.class)}
 			{...rest}
 		/>
@@ -41,6 +42,7 @@ export const TabsList = <T extends ValidComponent = "div">(
 
 	return (
 		<TabsPrimitive.List
+			data-slot="tabs-list"
 			class={cn(
 				"relative flex w-full rounded-lg bg-muted p-1 text-muted-foreground data-[orientation=vertical]:flex-col data-[orientation=horizontal]:items-center data-[orientation=vertical]:items-stretch",
 				local.class,
@@ -62,6 +64,7 @@ export const TabsContent = <T extends ValidComponent = "div">(
 
 	return (
 		<TabsPrimitive.Content
+			data-slot="tabs-content"
 			class={cn(
 				"transition-shadow duration-200 focus-visible:outline-none focus-visible:ring-[1.5px] focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background data-[orientation=horizontal]:mt-2 data-[orientation=vertical]:ml-2",
 				local.class,
@@ -83,6 +86,7 @@ export const TabsTrigger = <T extends ValidComponent = "button">(
 
 	return (
 		<TabsPrimitive.Trigger
+			data-slot="tabs-trigger"
 			class={cn(
 				"peer relative z-10 inline-flex h-7 w-full items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium outline-none transition-colors disabled:pointer-events-none disabled:opacity-50 data-[selected]:text-foreground",
 				local.class,
@@ -126,6 +130,7 @@ export const TabsIndicator = <T extends ValidComponent = "div">(
 
 	return (
 		<TabsPrimitive.Indicator
+			data-slot="tabs-indicator"
 			class={cn(tabsIndicatorVariants({ variant: local.variant }), local.class)}
 			{...rest}
 		/>

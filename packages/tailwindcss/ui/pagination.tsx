@@ -1,33 +1,57 @@
 import { cn } from "@/libs/cn";
-import type {
-	PaginationEllipsisProps,
-	PaginationItemProps,
-	PaginationPreviousProps,
-	PaginationRootProps,
-} from "@kobalte/core/pagination";
-import { Pagination as PaginationPrimitive } from "@kobalte/core/pagination";
-import type { PolymorphicProps } from "@kobalte/core/polymorphic";
 import type { VariantProps } from "class-variance-authority";
-import type { ValidComponent, VoidProps } from "solid-js";
+import type { ComponentProps } from "solid-js";
 import { mergeProps, splitProps } from "solid-js";
 import { buttonVariants } from "./button";
 
-export const PaginationItems = PaginationPrimitive.Items;
-
-type paginationProps<T extends ValidComponent = "nav"> =
-	PaginationRootProps<T> & {
-		class?: string;
-	};
-
-export const Pagination = <T extends ValidComponent = "nav">(
-	props: PolymorphicProps<T, paginationProps<T>>,
-) => {
-	const [local, rest] = splitProps(props as paginationProps, ["class"]);
+export const Pagination = (props: ComponentProps<"nav">) => {
+	const [local, rest] = splitProps(props, ["class"]);
 
 	return (
-		<PaginationPrimitive
+		<nav
+			aria-label="pagination"
+			data-slot="pagination"
+			class={cn("mx-auto flex w-full justify-center", local.class)}
+			{...rest}
+		/>
+	);
+};
+
+export const PaginationContent = (props: ComponentProps<"ul">) => {
+	const [local, rest] = splitProps(props, ["class"]);
+
+	return (
+		<ul
+			data-slot="pagination-content"
+			class={cn("flex flex-row items-center gap-1", local.class)}
+			{...rest}
+		/>
+	);
+};
+
+export const PaginationItem = (props: ComponentProps<"li">) => {
+	return <li data-slot="pagination-item" {...props} />;
+};
+
+type PaginationLinkProps = {
+	isActive?: boolean;
+} & Pick<VariantProps<typeof buttonVariants>, "size"> &
+	ComponentProps<"a">;
+
+export const PaginationLink = (props: PaginationLinkProps) => {
+	const merged = mergeProps({ size: "icon" as const }, props);
+	const [local, rest] = splitProps(merged, ["class", "isActive", "size"]);
+
+	return (
+		<a
+			aria-current={local.isActive ? "page" : undefined}
+			data-slot="pagination-link"
+			data-active={local.isActive}
 			class={cn(
-				"mx-auto flex w-full justify-center [&>ul]:flex [&>ul]:flex-row [&>ul]:items-center [&>ul]:gap-1",
+				buttonVariants({
+					variant: local.isActive ? "outline" : "ghost",
+					size: local.size,
+				}),
 				local.class,
 			)}
 			{...rest}
@@ -35,100 +59,16 @@ export const Pagination = <T extends ValidComponent = "nav">(
 	);
 };
 
-type paginationItemProps<T extends ValidComponent = "button"> =
-	PaginationItemProps<T> &
-		Pick<VariantProps<typeof buttonVariants>, "size"> & {
-			class?: string;
-		};
-
-export const PaginationItem = <T extends ValidComponent = "button">(
-	props: PolymorphicProps<T, paginationItemProps<T>>,
+export const PaginationPrevious = (
+	props: ComponentProps<typeof PaginationLink>,
 ) => {
-	// @ts-expect-error - required `page`
-	const merge = mergeProps<paginationItemProps[]>({ size: "icon" }, props);
-	const [local, rest] = splitProps(merge as paginationItemProps, [
-		"class",
-		"size",
-	]);
+	const [local, rest] = splitProps(props, ["class"]);
 
 	return (
-		<PaginationPrimitive.Item
-			class={cn(
-				buttonVariants({
-					variant: "ghost",
-					size: local.size,
-				}),
-				"aria-[current=page]:border aria-[current=page]:border-input aria-[current=page]:bg-background aria-[current=page]:shadow-sm aria-[current=page]:hover:bg-accent aria-[current=page]:hover:text-accent-foreground",
-				local.class,
-			)}
-			{...rest}
-		/>
-	);
-};
-
-type paginationEllipsisProps<T extends ValidComponent = "div"> = VoidProps<
-	PaginationEllipsisProps<T> & {
-		class?: string;
-	}
->;
-
-export const PaginationEllipsis = <T extends ValidComponent = "div">(
-	props: PolymorphicProps<T, paginationEllipsisProps<T>>,
-) => {
-	const [local, rest] = splitProps(props as paginationEllipsisProps, ["class"]);
-
-	return (
-		<PaginationPrimitive.Ellipsis
-			class={cn("flex h-9 w-9 items-center justify-center", local.class)}
-			{...rest}
-		>
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				viewBox="0 0 24 24"
-				class="h-4 w-4"
-			>
-				<path
-					fill="none"
-					stroke="currentColor"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="2"
-					d="M4 12a1 1 0 1 0 2 0a1 1 0 1 0-2 0m7 0a1 1 0 1 0 2 0a1 1 0 1 0-2 0m7 0a1 1 0 1 0 2 0a1 1 0 1 0-2 0"
-				/>
-				<title>More pages</title>
-			</svg>
-		</PaginationPrimitive.Ellipsis>
-	);
-};
-
-type paginationPreviousProps<T extends ValidComponent = "button"> =
-	PaginationPreviousProps<T> &
-		Pick<VariantProps<typeof buttonVariants>, "size"> & {
-			class?: string;
-		};
-
-export const PaginationPrevious = <T extends ValidComponent = "button">(
-	props: PolymorphicProps<T, paginationPreviousProps<T>>,
-) => {
-	const merge = mergeProps<paginationPreviousProps<T>[]>(
-		{ size: "icon" },
-		props,
-	);
-	const [local, rest] = splitProps(merge as paginationPreviousProps, [
-		"class",
-		"size",
-	]);
-
-	return (
-		<PaginationPrimitive.Previous
-			class={cn(
-				buttonVariants({
-					variant: "ghost",
-					size: local.size,
-				}),
-				"aria-[current=page]:border aria-[current=page]:border-input aria-[current=page]:bg-background aria-[current=page]:shadow-sm aria-[current=page]:hover:bg-accent aria-[current=page]:hover:text-accent-foreground",
-				local.class,
-			)}
+		<PaginationLink
+			aria-label="Go to previous page"
+			size="default"
+			class={cn("gap-1 px-2.5 sm:pl-2.5", local.class)}
 			{...rest}
 		>
 			<svg
@@ -144,40 +84,29 @@ export const PaginationPrevious = <T extends ValidComponent = "button">(
 					stroke-width="2"
 					d="m15 6l-6 6l6 6"
 				/>
-				<title>Previous page</title>
 			</svg>
-		</PaginationPrimitive.Previous>
+			<span class="hidden sm:block">Previous</span>
+		</PaginationLink>
 	);
 };
 
-type paginationNextProps<T extends ValidComponent = "button"> =
-	paginationPreviousProps<T>;
-
-export const PaginationNext = <T extends ValidComponent = "button">(
-	props: PolymorphicProps<T, paginationNextProps<T>>,
+export const PaginationNext = (
+	props: ComponentProps<typeof PaginationLink>,
 ) => {
-	const merge = mergeProps<paginationNextProps<T>[]>({ size: "icon" }, props);
-	const [local, rest] = splitProps(merge as paginationNextProps, [
-		"class",
-		"size",
-	]);
+	const [local, rest] = splitProps(props, ["class"]);
 
 	return (
-		<PaginationPrimitive.Next
-			class={cn(
-				buttonVariants({
-					variant: "ghost",
-					size: local.size,
-				}),
-				"aria-[current=page]:border aria-[current=page]:border-input aria-[current=page]:bg-background aria-[current=page]:shadow-sm aria-[current=page]:hover:bg-accent aria-[current=page]:hover:text-accent-foreground",
-				local.class,
-			)}
+		<PaginationLink
+			aria-label="Go to next page"
+			size="default"
+			class={cn("gap-1 px-2.5 sm:pr-2.5", local.class)}
 			{...rest}
 		>
+			<span class="hidden sm:block">Next</span>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
-				class="h-4 w-4"
 				viewBox="0 0 24 24"
+				class="h-4 w-4"
 			>
 				<path
 					fill="none"
@@ -187,8 +116,46 @@ export const PaginationNext = <T extends ValidComponent = "button">(
 					stroke-width="2"
 					d="m9 6l6 6l-6 6"
 				/>
-				<title>Next page</title>
 			</svg>
-		</PaginationPrimitive.Next>
+		</PaginationLink>
 	);
+};
+
+export const PaginationEllipsis = (props: ComponentProps<"span">) => {
+	const [local, rest] = splitProps(props, ["class"]);
+
+	return (
+		<span
+			aria-hidden
+			data-slot="pagination-ellipsis"
+			class={cn("flex size-9 items-center justify-center", local.class)}
+			{...rest}
+		>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				viewBox="0 0 24 24"
+				class="size-4"
+			>
+				<path
+					fill="none"
+					stroke="currentColor"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2"
+					d="M4 12a1 1 0 1 0 2 0a1 1 0 1 0-2 0m7 0a1 1 0 1 0 2 0a1 1 0 1 0-2 0m7 0a1 1 0 1 0 2 0a1 1 0 1 0-2 0"
+				/>
+			</svg>
+			<span class="sr-only">More pages</span>
+		</span>
+	);
+};
+
+export {
+	Pagination,
+	PaginationContent,
+	PaginationLink,
+	PaginationItem,
+	PaginationPrevious,
+	PaginationNext,
+	PaginationEllipsis,
 };

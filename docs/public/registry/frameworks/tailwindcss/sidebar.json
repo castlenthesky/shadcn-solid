@@ -1,0 +1,19 @@
+{
+	"name": "sidebar",
+	"dependencies": ["solid-js", "class-variance-authority"],
+	"registryDependencies": [
+		"button",
+		"input",
+		"separator",
+		"sheet",
+		"skeleton",
+		"tooltip"
+	],
+	"files": [
+		{
+			"name": "sidebar.tsx",
+			"content": "// Comprehensive Sidebar component for SolidJS with full feature parity with React v4\n// See packages/tailwindcss/ui/sidebar.tsx for full implementation\nexport * from \"../../../packages/tailwindcss/ui/sidebar\";"
+		}
+	],
+	"type": "components:ui"
+}

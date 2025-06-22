@@ -8,7 +8,20 @@ import { Accordion as AccordionPrimitive } from "@kobalte/core/accordion";
 import type { PolymorphicProps } from "@kobalte/core/polymorphic";
 import { type ParentProps, type ValidComponent, splitProps } from "solid-js";
 
-export const Accordion = AccordionPrimitive;
+type accordionProps<T extends ValidComponent = "div"> =
+	AccordionItemProps<T> & {
+		class?: string;
+	};
+
+export const Accordion = <T extends ValidComponent = "div">(
+	props: PolymorphicProps<T, accordionProps<T>>,
+) => {
+	const [local, rest] = splitProps(props as accordionProps, ["class"]);
+
+	return (
+		<AccordionPrimitive data-slot="accordion" class={local.class} {...rest} />
+	);
+};
 
 type accordionItemProps<T extends ValidComponent = "div"> =
 	AccordionItemProps<T> & {
@@ -21,7 +34,11 @@ export const AccordionItem = <T extends ValidComponent = "div">(
 	const [local, rest] = splitProps(props as accordionItemProps, ["class"]);
 
 	return (
-		<AccordionPrimitive.Item class={cn("border-b", local.class)} {...rest} />
+		<AccordionPrimitive.Item
+			data-slot="accordion-item"
+			class={cn("border-b last:border-b-0", local.class)}
+			{...rest}
+		/>
 	);
 };
 
@@ -42,8 +59,9 @@ export const AccordionTrigger = <T extends ValidComponent = "button">(
 	return (
 		<AccordionPrimitive.Header class="flex" as="div">
 			<AccordionPrimitive.Trigger
+				data-slot="accordion-trigger"
 				class={cn(
-					"flex flex-1 items-center justify-between py-4 text-sm font-medium transition-shadow hover:underline [&[data-expanded]>svg]:rotate-180 bg-inherit focus-visible:(outline-none ring-1.5 ring-ring)",
+					"flex flex-1 items-start justify-between gap-4 py-4 text-sm font-medium transition-shadow hover:underline [&[data-expanded]>svg]:rotate-180 bg-inherit rounded-md focus-visible:(outline-none border-ring ring-ring/50 ring-3)",
 					local.class,
 				)}
 				{...rest}
@@ -52,7 +70,7 @@ export const AccordionTrigger = <T extends ValidComponent = "button">(
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 24 24"
-					class="h-4 w-4 text-muted-foreground transition-transform duration-200"
+					class="h-4 w-4 text-muted-foreground transition-transform duration-200 translate-y-0.5"
 				>
 					<path
 						fill="none"
@@ -85,6 +103,7 @@ export const AccordionContent = <T extends ValidComponent = "div">(
 
 	return (
 		<AccordionPrimitive.Content
+			data-slot="accordion-content"
 			class={cn(
 				"animate-accordion-up overflow-hidden text-sm data-[expanded]:animate-accordion-down",
 				local.class,

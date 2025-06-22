@@ -1,0 +1,19 @@
+{
+	"name": "input-otp",
+	"type": "component:ui",
+	"registryDependencies": [],
+	"dependencies": ["@corvu/otp-field"],
+	"devDependencies": [],
+	"unocss": {
+		"config": {
+			"plugins": []
+		}
+	},
+	"cssVars": {},
+	"files": [
+		{
+			"name": "input-otp.tsx",
+			"content": "./input-otp.tsx"
+		}
+	]
+}

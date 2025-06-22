@@ -1,13 +1,11 @@
 {
-  "name": "sonner",
-  "dependencies": [
-    "solid-sonner"
-  ],
-  "files": [
-    {
-      "name": "sonner.tsx",
-      "content": "import { Toaster as Sonner } from \"solid-sonner\";\n\nexport const Toaster = (props: Parameters<typeof Sonner>[0]) => {\n\treturn (\n\t\t<Sonner\n\t\t\tclass=\"toaster group\"\n\t\t\ttoastOptions={{\n\t\t\t\tclasses: {\n\t\t\t\t\ttoast:\n\t\t\t\t\t\t\"group toast group-[.toaster]:(bg-background text-foreground border-border shadow-lg)\",\n\t\t\t\t\tdescription: \"group-[.toast]:text-muted-foreground\",\n\t\t\t\t\tactionButton: \"group-[.toast]:(bg-primary text-primary-foreground)\",\n\t\t\t\t\tcancelButton: \"group-[.toast]:(bg-muted text-muted-foreground)\",\n\t\t\t\t},\n\t\t\t}}\n\t\t\t{...props}\n\t\t/>\n\t);\n};\n"
-    }
-  ],
-  "type": "components:ui"
+	"name": "sonner",
+	"dependencies": ["solid-sonner", "@kobalte/core"],
+	"files": [
+		{
+			"name": "sonner.tsx",
+			"content": "import { useColorMode } from \"@kobalte/core\";\nimport { Toaster as Sonner, type ToasterProps } from \"solid-sonner\";\n\nexport type { ToasterProps };\n\nexport const Toaster = (props: ToasterProps) => {\n\tconst { colorMode } = useColorMode();\n\n\treturn (\n\t\t<Sonner\n\t\t\ttheme={colorMode() as ToasterProps[\"theme\"]}\n\t\t\tclass=\"toaster group\"\n\t\t\tstyle={{\n\t\t\t\t\"--normal-bg\": \"hsl(var(--popover))\",\n\t\t\t\t\"--normal-text\": \"hsl(var(--popover-foreground))\",\n\t\t\t\t\"--normal-border\": \"hsl(var(--border))\",\n\t\t\t\t\"--success-bg\": \"hsl(var(--background))\",\n\t\t\t\t\"--success-text\": \"hsl(var(--foreground))\",\n\t\t\t\t\"--success-border\": \"hsl(var(--border))\",\n\t\t\t\t\"--info-bg\": \"hsl(var(--background))\",\n\t\t\t\t\"--info-text\": \"hsl(var(--foreground))\",\n\t\t\t\t\"--info-border\": \"hsl(var(--border))\",\n\t\t\t\t\"--warning-bg\": \"hsl(var(--background))\",\n\t\t\t\t\"--warning-text\": \"hsl(var(--foreground))\",\n\t\t\t\t\"--warning-border\": \"hsl(var(--border))\",\n\t\t\t\t\"--error-bg\": \"hsl(var(--destructive))\",\n\t\t\t\t\"--error-text\": \"hsl(var(--destructive-foreground))\",\n\t\t\t\t\"--error-border\": \"hsl(var(--destructive))\",\n\t\t\t}}\n\t\t\ttoastOptions={{\n\t\t\t\tclasses: {\n\t\t\t\t\ttoast:\n\t\t\t\t\t\t\"group toast group-[.toaster]:(bg-background text-foreground border-border shadow-lg)\",\n\t\t\t\t\tdescription: \"group-[.toast]:text-muted-foreground\",\n\t\t\t\t\tactionButton: \"group-[.toast]:(bg-primary text-primary-foreground hover:bg-primary/90)\",\n\t\t\t\t\tcancelButton: \"group-[.toast]:(bg-muted text-muted-foreground hover:bg-muted/80)\",\n\t\t\t\t},\n\t\t\t}}\n\t\t\t{...props}\n\t\t/>\n\t);\n};\n"
+		}
+	],
+	"type": "components:ui"
 }

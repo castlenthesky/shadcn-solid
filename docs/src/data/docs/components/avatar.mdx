@@ -1,0 +1,157 @@
+---
+title: Avatar
+description: An image element with a fallback for representing the user.
+component: true
+---
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@repo/tailwindcss/ui/tabs"
+
+<Tabs defaultValue="preview" class="relative mr-auto w-full">
+  <div class="flex items-center justify-between pb-3">
+    <TabsList class="w-full justify-start rounded-none border-b bg-transparent p-0">
+      <TabsTrigger value="preview" class="relative h-9 rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none">
+        Preview
+      </TabsTrigger>
+      <TabsTrigger value="code" class="relative h-9 rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none">
+        Code
+      </TabsTrigger>
+    </TabsList>
+  </div>
+  <TabsContent value="preview" class="relative rounded-md border">
+    <div class="flex h-[350px] w-full items-center justify-center p-10">
+      <example>avatar-demo</example>
+    </div>
+  </TabsContent>
+  <TabsContent value="code">
+    <div class="flex flex-col space-y-4">
+      <div class="w-full rounded-md [&_pre]:my-0 [&_pre]:max-h-[350px] [&_pre]:overflow-auto">
+        ```tsx
+        import { Avatar, AvatarFallback, AvatarImage } from "@repo/tailwindcss/ui/avatar"
+
+        export default function AvatarDemo() {
+          return (
+            <Avatar>
+              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+          )
+        }
+        ```
+      </div>
+    </div>
+  </TabsContent>
+</Tabs>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+<TabsTrigger value="cli">CLI</TabsTrigger>
+<TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn-solid@latest add avatar
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install @kobalte/core
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="avatar" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+```
+
+```tsx
+<Avatar>
+  <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+  <AvatarFallback>CN</AvatarFallback>
+</Avatar>
+```
+
+## Examples
+
+### Default
+
+<Tabs defaultValue="preview" class="relative mr-auto w-full">
+  <div class="flex items-center justify-between pb-3">
+    <TabsList class="w-full justify-start rounded-none border-b bg-transparent p-0">
+      <TabsTrigger value="preview">Preview</TabsTrigger>
+      <TabsTrigger value="code">Code</TabsTrigger>
+    </TabsList>
+  </div>
+  <TabsContent value="preview" class="relative rounded-md border">
+    <div class="flex h-[200px] w-full items-center justify-center p-10">
+      <example>avatar-demo</example>
+    </div>
+  </TabsContent>
+  <TabsContent value="code">
+    ```tsx
+    import { Avatar, AvatarFallback, AvatarImage } from "@repo/tailwindcss/ui/avatar"
+
+    export default function AvatarDemo() {
+      return (
+        <Avatar>
+          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+          <AvatarFallback>CN</AvatarFallback>
+        </Avatar>
+      )
+    }
+    ```
+  </TabsContent>
+</Tabs>
+
+## Components
+
+The Avatar component consists of:
+
+- `Avatar` - The root container
+- `AvatarImage` - The image element
+- `AvatarFallback` - The fallback element shown when the image fails to load
+
+## API Reference
+
+### Avatar
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `class` | `string` | `undefined` | Additional CSS classes |
+
+### AvatarImage
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `src` | `string` | `undefined` | The image source |
+| `alt` | `string` | `undefined` | Alternative text for the image |
+| `class` | `string` | `undefined` | Additional CSS classes |
+
+### AvatarFallback
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `class` | `string` | `undefined` | Additional CSS classes |
+| `children` | `JSX.Element` | `undefined` | The fallback content |

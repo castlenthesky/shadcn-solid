@@ -1,0 +1,19 @@
+{
+	"name": "form-validation",
+	"type": "component:ui",
+	"registryDependencies": [],
+	"dependencies": ["zod"],
+	"devDependencies": [],
+	"unocss": {
+		"config": {
+			"plugins": []
+		}
+	},
+	"cssVars": {},
+	"files": [
+		{
+			"name": "form-validation.tsx",
+			"content": "./form-validation.tsx"
+		}
+	]
+}

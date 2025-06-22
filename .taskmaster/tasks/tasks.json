@@ -1,0 +1,914 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Setup Project Repository and Development Environment",
+        "description": "Initialize the project repository and set up the development environment for the shadcn-ui SolidJS port.",
+        "details": "1. Create a new GitHub repository named 'shadcn-solid'\n2. Initialize the project with pnpm: `pnpm init`\n3. Set up TypeScript: `pnpm add -D typescript`\n4. Configure tsconfig.json for SolidJS\n5. Set up Vite as the build tool: `pnpm add -D vite vite-plugin-solid`\n6. Configure Vite for SolidJS and TypeScript\n7. Set up ESLint and Prettier for code quality\n8. Create initial project structure (src, components, utils folders)\n9. Set up Jest and Testing Library for SolidJS: `pnpm add -D jest @testing-library/jest-dom solid-jest @testing-library/user-event`\n10. Configure Jest for SolidJS testing",
+        "testStrategy": "Verify that the repository is created, all dependencies are installed correctly, and the development environment can successfully build and run a basic SolidJS application.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 2,
+        "title": "Implement Core Utility Functions",
+        "description": "Port essential utility functions from shadcn-ui to work with SolidJS, including the 'cn' function for class name merging, variant utilities, and critical hooks/utilities needed by UI components.",
+        "status": "done",
+        "dependencies": [
+          1
+        ],
+        "priority": "high",
+        "details": "1. Install clsx and tailwind-merge: `pnpm add clsx tailwind-merge`\n2. Create a utils folder in the src directory\n3. Implement the 'cn' function using clsx and tailwind-merge\n4. Port the createVariant utility from shadcn-ui, adapting it for SolidJS patterns\n5. Implement the following critical utilities adapted for SolidJS patterns:\n   - Mobile/responsive detection (createMediaQuery, createIsMobile)\n   - Clipboard functionality (createCopyToClipboard)\n   - Hydration safety (createMounted)\n   - Platform detection (createIsMac)\n   - DOM observation (createMutationObserver)\n   - URL construction (absoluteUrl)\n   - Date formatting (formatDate)\n6. Ensure all utilities are properly typed with TypeScript\n7. Create unit tests for each utility function\n8. Document usage patterns for each utility, highlighting differences from React implementation",
+        "testStrategy": "Write comprehensive unit tests for each utility function, ensuring they work as expected with SolidJS reactive primitives and produce the same output as their React counterparts. Test each utility with various inputs and edge cases. For reactive utilities that use signals and createEffect, ensure proper reactivity and cleanup.",
+        "subtasks": [
+          {
+            "id": 2.1,
+            "title": "Implement responsive detection utilities",
+            "description": "Port useMediaQuery and useIsMobile from React to SolidJS as createMediaQuery and createIsMobile primitives",
+            "status": "done"
+          },
+          {
+            "id": 2.2,
+            "title": "Implement clipboard functionality",
+            "description": "Create a createCopyToClipboard utility that provides clipboard operations with proper signal-based state management",
+            "status": "done"
+          },
+          {
+            "id": 2.3,
+            "title": "Implement hydration safety utility",
+            "description": "Create a createMounted primitive that safely handles hydration mismatches in SSR contexts",
+            "status": "done"
+          },
+          {
+            "id": 2.4,
+            "title": "Implement platform detection",
+            "description": "Create a createIsMac utility to detect macOS for keyboard shortcuts and platform-specific behaviors",
+            "status": "done"
+          },
+          {
+            "id": 2.5,
+            "title": "Implement DOM observation utility",
+            "description": "Port useMutationObserver to createMutationObserver for watching DOM changes with proper cleanup",
+            "status": "done"
+          },
+          {
+            "id": 2.6,
+            "title": "Implement URL and date utilities",
+            "description": "Create absoluteUrl and formatDate utility functions with proper TypeScript typing",
+            "status": "done"
+          },
+          {
+            "id": 2.7,
+            "title": "Write comprehensive tests",
+            "description": "Create unit tests for all utility functions, ensuring they work correctly with SolidJS reactivity system",
+            "status": "done"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Set Up Styling System with Tailwind CSS",
+        "description": "Integrate Tailwind CSS into the project and set up the necessary configuration to match shadcn-ui's styling approach.",
+        "details": "1. Install Tailwind CSS and its dependencies: `pnpm add -D tailwindcss postcss autoprefixer`\n2. Initialize Tailwind CSS: `npx tailwindcss init -p`\n3. Configure Tailwind CSS to scan SolidJS files\n4. Set up the base Tailwind CSS file in src/index.css\n5. Configure Tailwind CSS theme to match shadcn-ui's default theme\n6. Set up CSS variables for theming in :root and [data-theme=\"dark\"] selectors\n7. Implement a basic theme switching mechanism using SolidJS signals\n8. Create a ThemeProvider component for top-level theme management",
+        "testStrategy": "Create a sample component that uses various Tailwind CSS classes and theme variables. Test the component in both light and dark modes to ensure proper styling and theme switching functionality.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 4,
+        "title": "Implement Button Component",
+        "description": "Create the Button component as the first foundational UI element, matching shadcn-ui's React implementation.",
+        "details": "1. Create a new file: src/components/ui/button.tsx\n2. Implement the Button component using SolidJS's createComponent\n3. Use the 'cn' utility for class merging\n4. Implement all button variants (default, secondary, destructive, outline, ghost, link)\n5. Ensure proper TypeScript typing for props\n6. Implement size variants (default, sm, lg, icon)\n7. Add ARIA attributes for accessibility\n8. Implement loading state with a Spinner component\n9. Create storybook stories for all button variants and states",
+        "testStrategy": "Write unit tests covering all button variants, sizes, and states. Include accessibility tests to ensure proper ARIA attributes. Create visual regression tests to compare against the original shadcn-ui button component.",
+        "priority": "high",
+        "dependencies": [
+          2,
+          3
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 5,
+        "title": "Develop Input and TextField Components",
+        "description": "Create the Input and TextField components, adapting them for SolidJS while maintaining feature parity with shadcn-ui.",
+        "details": "1. Create src/components/ui/input.tsx and src/components/ui/text-field.tsx\n2. Implement the Input component as a controlled input using SolidJS signals\n3. Implement the TextField component, composing the Input component with a label and error message\n4. Ensure proper handling of controlled and uncontrolled input scenarios\n5. Implement input variants (default, error, disabled)\n6. Add proper ARIA attributes and labels for accessibility\n7. Create custom event handlers that work with SolidJS's fine-grained reactivity\n8. Implement input masking and formatting utilities if present in shadcn-ui\n9. Create storybook stories for all input and text field variants and states",
+        "testStrategy": "Write unit tests for both Input and TextField components, covering all variants and states. Include tests for controlled and uncontrolled inputs, error handling, and accessibility. Perform visual regression testing against shadcn-ui components.",
+        "priority": "high",
+        "dependencies": [
+          2,
+          3
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 6,
+        "title": "Create Card Component",
+        "description": "Implement the Card component and its subcomponents (CardHeader, CardTitle, CardDescription, CardContent, CardFooter) for SolidJS.",
+        "details": "1. Create src/components/ui/card.tsx\n2. Implement the main Card component\n3. Create subcomponents: CardHeader, CardTitle, CardDescription, CardContent, CardFooter\n4. Use SolidJS's component composition pattern for nested components\n5. Implement proper TypeScript typing for all components and props\n6. Ensure responsive design using Tailwind CSS classes\n7. Add any necessary ARIA roles for accessibility\n8. Create storybook stories showcasing various card layouts and compositions",
+        "testStrategy": "Write unit tests for the Card component and all subcomponents. Test different compositions and ensure proper rendering of nested components. Perform visual regression testing against the original shadcn-ui Card component.",
+        "priority": "medium",
+        "dependencies": [
+          2,
+          3
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 7,
+        "title": "Implement Badge Component",
+        "description": "Create the Badge component, adapting it for SolidJS while maintaining visual consistency with shadcn-ui.",
+        "details": "1. Create src/components/ui/badge.tsx\n2. Implement the Badge component using SolidJS's createComponent\n3. Use the 'cn' utility for class merging\n4. Implement all badge variants (default, secondary, outline, destructive)\n5. Ensure proper TypeScript typing for props\n6. Add ARIA attributes for accessibility if necessary\n7. Create storybook stories for all badge variants",
+        "testStrategy": "Write unit tests covering all badge variants. Include accessibility tests to ensure proper ARIA attributes if applicable. Create visual regression tests to compare against the original shadcn-ui badge component.",
+        "priority": "medium",
+        "dependencies": [
+          2,
+          3
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 8,
+        "title": "Develop Separator Component",
+        "description": "Create the Separator component for SolidJS, matching the functionality and styling of the shadcn-ui version.",
+        "details": "1. Create src/components/ui/separator.tsx\n2. Implement the Separator component using SolidJS's createComponent\n3. Use the 'cn' utility for class merging\n4. Implement orientation prop (horizontal, vertical)\n5. Ensure proper TypeScript typing for props\n6. Add necessary ARIA attributes for accessibility\n7. Create storybook stories for both orientations of the separator",
+        "testStrategy": "Write unit tests for the Separator component, covering both orientations. Include accessibility tests to ensure proper ARIA attributes. Perform visual regression testing against the shadcn-ui Separator component.",
+        "priority": "low",
+        "dependencies": [
+          2,
+          3
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 9,
+        "title": "Implement Skeleton Component",
+        "description": "Create the Skeleton component for loading state representations, adapting it for SolidJS.",
+        "details": "1. Create src/components/ui/skeleton.tsx\n2. Implement the Skeleton component using SolidJS's createComponent\n3. Use the 'cn' utility for class merging\n4. Implement customizable width and height props\n5. Add animation for loading effect using Tailwind CSS classes\n6. Ensure proper TypeScript typing for props\n7. Create storybook stories showcasing various sizes and use cases of the Skeleton component",
+        "testStrategy": "Write unit tests for the Skeleton component, covering different sizes and configurations. Perform visual regression testing against the shadcn-ui Skeleton component. Test animation functionality in various browsers.",
+        "priority": "low",
+        "dependencies": [
+          2,
+          3
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 10,
+        "title": "Create Alert and AlertDialog Components",
+        "description": "Implement the Alert and AlertDialog components, adapting them for SolidJS while maintaining feature parity with shadcn-ui.",
+        "details": "1. Create src/components/ui/alert.tsx and src/components/ui/alert-dialog.tsx\n2. Implement the Alert component with variants (default, destructive)\n3. Create AlertTitle and AlertDescription subcomponents\n4. Implement the AlertDialog component using SolidJS's createSignal for state management\n5. Create AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogFooter, AlertDialogTitle, AlertDialogDescription subcomponents\n6. Ensure proper keyboard navigation and focus management for AlertDialog\n7. Add necessary ARIA attributes and roles for accessibility\n8. Use SolidJS Transition API for enter/exit animations\n9. Create storybook stories for both Alert and AlertDialog components",
+        "testStrategy": "Write comprehensive unit tests for both Alert and AlertDialog components. Test keyboard navigation, focus management, and accessibility features. Perform visual regression testing against shadcn-ui components. Test animation and transition effects across different browsers.",
+        "priority": "high",
+        "dependencies": [
+          2,
+          3,
+          4
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 11,
+        "title": "Implement Dialog and Sheet Components",
+        "description": "Create the Dialog and Sheet components for SolidJS, matching the functionality and styling of the shadcn-ui versions.",
+        "details": "1. Create src/components/ui/dialog.tsx and src/components/ui/sheet.tsx\n2. Implement Dialog and Sheet components using SolidJS's createSignal for state management\n3. Create subcomponents: Trigger, Content, Header, Footer, Title, Description\n4. Implement Sheet variants for different slide-in directions (top, right, bottom, left)\n5. Ensure proper keyboard navigation and focus management\n6. Add necessary ARIA attributes and roles for accessibility\n7. Use SolidJS Transition API for enter/exit animations\n8. Implement click outside to close functionality\n9. Create storybook stories for both Dialog and Sheet components",
+        "testStrategy": "Write unit tests covering all aspects of Dialog and Sheet components. Test keyboard navigation, focus management, and accessibility features. Verify proper functioning of all Sheet variants. Perform visual regression testing against shadcn-ui components. Test animation and transition effects across different browsers.",
+        "priority": "high",
+        "dependencies": [
+          2,
+          3,
+          4
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 12,
+        "title": "Develop Dropdown Menu Component",
+        "description": "Implement the Dropdown Menu component for SolidJS, ensuring feature parity with the shadcn-ui version.",
+        "details": "1. Create src/components/ui/dropdown-menu.tsx\n2. Implement the DropdownMenu component using SolidJS's createSignal for state management\n3. Create subcomponents: Trigger, Content, Item, CheckboxItem, RadioItem, Label, Separator, Shortcut\n4. Ensure proper keyboard navigation within the menu\n5. Implement proper focus management when opening/closing the menu\n6. Add necessary ARIA attributes and roles for accessibility\n7. Use SolidJS Transition API for enter/exit animations\n8. Implement click outside to close functionality\n9. Create storybook stories showcasing various dropdown menu configurations",
+        "testStrategy": "Write comprehensive unit tests for the DropdownMenu component and all subcomponents. Test keyboard navigation, focus management, and accessibility features. Verify proper functioning of CheckboxItem and RadioItem. Perform visual regression testing against the shadcn-ui DropdownMenu component. Test animation and transition effects across different browsers.",
+        "priority": "high",
+        "dependencies": [
+          2,
+          3,
+          4
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 13,
+        "title": "Create Popover Component",
+        "description": "Implement the Popover component for SolidJS, matching the functionality and styling of the shadcn-ui version.",
+        "details": "1. Create src/components/ui/popover.tsx\n2. Implement the Popover component using SolidJS's createSignal for state management\n3. Create subcomponents: Trigger and Content\n4. Use a positioning library like Floating UI for accurate popover placement\n5. Implement proper focus management when opening/closing the popover\n6. Add necessary ARIA attributes and roles for accessibility\n7. Use SolidJS Transition API for enter/exit animations\n8. Implement click outside to close functionality\n9. Create storybook stories showcasing various popover configurations and placements",
+        "testStrategy": "Write unit tests for the Popover component and its subcomponents. Test focus management and accessibility features. Verify proper positioning across different screen sizes. Perform visual regression testing against the shadcn-ui Popover component. Test animation and transition effects across different browsers.",
+        "priority": "medium",
+        "dependencies": [
+          2,
+          3
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 14,
+        "title": "Implement Tooltip Component",
+        "description": "Create the Tooltip component for SolidJS, ensuring feature parity and styling consistency with the shadcn-ui version.",
+        "details": "1. Create src/components/ui/tooltip.tsx\n2. Implement the Tooltip component using SolidJS's createSignal for state management\n3. Create subcomponents: Trigger and Content\n4. Use Floating UI for accurate tooltip placement\n5. Implement proper focus and hover management\n6. Add necessary ARIA attributes and roles for accessibility\n7. Use SolidJS Transition API for enter/exit animations\n8. Implement delay for showing/hiding tooltips\n9. Create storybook stories showcasing various tooltip configurations and placements",
+        "testStrategy": "Write unit tests for the Tooltip component and its subcomponents. Test hover and focus behaviors. Verify proper positioning across different screen sizes. Perform visual regression testing against the shadcn-ui Tooltip component. Test animation and transition effects across different browsers.",
+        "priority": "medium",
+        "dependencies": [
+          2,
+          3
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 15,
+        "title": "Develop Toast/Sonner Component",
+        "description": "Review existing Toast and Sonner components in the SolidJS implementation, determine which should be the primary implementation, and ensure it matches the React v4 Sonner component styling and functionality.",
+        "status": "done",
+        "dependencies": [
+          2,
+          3
+        ],
+        "priority": "high",
+        "details": "1. Review the existing Toast component in src/components/ui/toast.tsx\n2. Review the existing Sonner component implementation\n3. Compare both implementations against the React v4 Sonner component for feature parity\n4. Determine which implementation (Toast or Sonner) should be the primary one based on:\n   - Code quality and maintainability\n   - Feature completeness\n   - Alignment with React v4 Sonner component\n   - Accessibility compliance\n5. Implement Sonner as the primary toast solution based on review findings\n6. Add missing theme management features to match React v4 implementation\n7. Integrate CSS custom properties for design system alignment\n8. Update styling to match React v4 Sonner component exactly\n9. Ensure proper focus management for accessibility\n10. Verify all necessary ARIA attributes and roles are present\n11. Test animations and transitions for smoothness\n12. Update or create documentation for the finalized component\n13. Update any existing storybook stories to showcase the finalized implementation",
+        "testStrategy": "Test the finalized Sonner implementation against the React v4 Sonner component for feature parity. Verify proper rendering of all toast variants. Test focus management and accessibility features. Perform visual regression testing to ensure styling matches the React implementation. Test animation and transition effects across different browsers. Specifically test dynamic theme switching functionality and CSS custom properties integration.",
+        "subtasks": [
+          {
+            "id": "15.1",
+            "description": "Review existing Toast and Sonner implementations",
+            "status": "done"
+          },
+          {
+            "id": "15.2",
+            "description": "Compare implementations against React v4 Sonner component",
+            "status": "done"
+          },
+          {
+            "id": "15.3",
+            "description": "Document decision on which implementation to use as primary",
+            "status": "done"
+          },
+          {
+            "id": "15.4",
+            "description": "Implement Sonner as the primary toast solution",
+            "status": "done"
+          },
+          {
+            "id": "15.5",
+            "description": "Add missing theme management features to match React v4",
+            "status": "done"
+          },
+          {
+            "id": "15.6",
+            "description": "Integrate CSS custom properties for design system alignment",
+            "status": "done"
+          },
+          {
+            "id": "15.7",
+            "description": "Update styling to match React v4 Sonner exactly",
+            "status": "done"
+          },
+          {
+            "id": "15.8",
+            "description": "Update or consolidate storybook examples",
+            "status": "done"
+          }
+        ]
+      },
+      {
+        "id": 16,
+        "title": "Implement Tabs Component",
+        "description": "Create the Tabs component for SolidJS, ensuring feature parity and styling consistency with the shadcn-ui version.",
+        "details": "1. Create src/components/ui/tabs.tsx\n2. Implement the Tabs component using SolidJS's createSignal for state management\n3. Create subcomponents: TabsList, TabsTrigger, and TabsContent\n4. Implement proper keyboard navigation between tabs\n5. Ensure correct ARIA attributes and roles for accessibility\n6. Use SolidJS Transition API for content switching animations\n7. Implement controlled and uncontrolled modes\n8. Create storybook stories showcasing various tabs configurations",
+        "testStrategy": "Write unit tests for the Tabs component and all subcomponents. Test keyboard navigation and accessibility features. Verify proper functioning in both controlled and uncontrolled modes. Perform visual regression testing against the shadcn-ui Tabs component. Test animation and transition effects across different browsers.",
+        "priority": "medium",
+        "dependencies": [
+          2,
+          3
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 17,
+        "title": "Create Switch Component",
+        "description": "Implement the Switch component for SolidJS, matching the functionality and styling of the shadcn-ui version.",
+        "details": "1. Create src/components/ui/switch.tsx\n2. Implement the Switch component using SolidJS's createSignal for state management\n3. Ensure proper handling of checked/unchecked states\n4. Implement proper keyboard interaction (toggle with Space key)\n5. Add necessary ARIA attributes and roles for accessibility\n6. Use SolidJS Transition API for smooth toggle animation\n7. Implement disabled state styling\n8. Create storybook stories showcasing various switch configurations",
+        "testStrategy": "Write unit tests for the Switch component, covering all states (checked, unchecked, disabled). Test keyboard interaction and accessibility features. Perform visual regression testing against the shadcn-ui Switch component. Test animation and transition effects across different browsers.",
+        "priority": "medium",
+        "dependencies": [
+          2,
+          3
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 18,
+        "title": "Develop Checkbox Component",
+        "description": "Create the Checkbox component for SolidJS, ensuring feature parity and styling consistency with the shadcn-ui version.",
+        "details": "1. Create src/components/ui/checkbox.tsx\n2. Implement the Checkbox component using SolidJS's createSignal for state management\n3. Ensure proper handling of checked, unchecked, and indeterminate states\n4. Implement proper keyboard interaction (toggle with Space key)\n5. Add necessary ARIA attributes and roles for accessibility\n6. Use SolidJS Transition API for smooth state change animation\n7. Implement disabled state styling\n8. Create storybook stories showcasing various checkbox configurations",
+        "testStrategy": "Write unit tests for the Checkbox component, covering all states (checked, unchecked, indeterminate, disabled). Test keyboard interaction and accessibility features. Perform visual regression testing against the shadcn-ui Checkbox component. Test animation and transition effects across different browsers.",
+        "priority": "medium",
+        "dependencies": [
+          2,
+          3
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 19,
+        "title": "Implement Radio Group Component",
+        "description": "Create the Radio Group component for SolidJS, matching the functionality and styling of the shadcn-ui version.",
+        "details": "1. Create src/components/ui/radio-group.tsx\n2. Implement the RadioGroup component using SolidJS's createSignal for state management\n3. Create RadioGroupItem subcomponent\n4. Ensure proper keyboard navigation within the group\n5. Implement proper ARIA attributes and roles for accessibility\n6. Use SolidJS Transition API for smooth selection animation\n7. Implement disabled state styling for both group and individual items\n8. Create storybook stories showcasing various radio group configurations",
+        "testStrategy": "Write unit tests for the RadioGroup component and RadioGroupItem subcomponent. Test keyboard navigation and accessibility features. Verify proper state management within the group. Perform visual regression testing against the shadcn-ui RadioGroup component. Test animation and transition effects across different browsers.",
+        "priority": "medium",
+        "dependencies": [
+          2,
+          3
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 20,
+        "title": "Create Select/Combobox Component",
+        "description": "Update the existing Combobox component and implement a Select component for SolidJS, ensuring feature parity and styling consistency with the shadcn-ui React v4 version.",
+        "status": "done",
+        "dependencies": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "priority": "high",
+        "details": "1. Update the existing Combobox component (which uses Kobalte primitives) to match React v4 Select component styling and functionality\n2. Create src/components/ui/select.tsx to implement the Select component\n3. Ensure the Combobox and Select components share consistent patterns and styling\n4. Implement the Select component using SolidJS's createSignal for state management\n5. Create subcomponents: Trigger, Content, Item, Separator\n6. Ensure proper keyboard navigation within both components\n7. Implement proper focus management when opening/closing the dropdown\n8. Verify and enhance ARIA attributes and roles for accessibility\n9. Use SolidJS Transition API for enter/exit animations\n10. Ensure virtualization for large lists is properly implemented\n11. Update storybook stories to showcase various select configurations and the updated combobox",
+        "testStrategy": "Write comprehensive unit tests for both the updated Combobox and new Select components and all subcomponents. Test keyboard navigation, focus management, and accessibility features. Verify proper functioning of search in Combobox. Test virtualization with large datasets. Perform visual regression testing against shadcn-ui React v4 components. Test animation and transition effects across different browsers.",
+        "subtasks": []
+      },
+      {
+        "id": 21,
+        "title": "Implement Command Component",
+        "description": "Create the Command component for SolidJS, matching the functionality and styling of the shadcn-ui version.",
+        "details": "1. Create src/components/ui/command.tsx\n2. Implement the Command component using SolidJS's createSignal and createStore for state management\n3. Create subcomponents: Input, List, Item, Group, Separator, Empty\n4. Implement fuzzy search functionality using a library like fuse.js\n5. Ensure proper keyboard navigation within the command menu\n6. Implement proper focus management when opening/closing the command menu\n7. Add necessary ARIA attributes and roles for accessibility\n8. Use SolidJS Transition API for enter/exit animations\n9. Implement virtualization for large lists using solid-virtual-list\n10. Create storybook stories showcasing various command menu configurations",
+        "testStrategy": "Write comprehensive unit tests for the Command component and all subcomponents. Test keyboard navigation, focus management, and accessibility features. Verify proper functioning of fuzzy search. Test virtualization with large datasets. Perform visual regression testing against the shadcn-ui Command component. Test animation and transition effects across different browsers.",
+        "priority": "high",
+        "dependencies": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 22,
+        "title": "Develop Data Table Component",
+        "description": "Implement the Data Table component for SolidJS, ensuring feature parity and styling consistency with the shadcn-ui version.",
+        "details": "1. Create src/components/ui/data-table.tsx\n2. Implement the DataTable component using SolidJS's createSignal and createStore for state management\n3. Integrate with a table library like TanStack Table (solid-table)\n4. Implement features: sorting, filtering, pagination, row selection\n5. Create subcomponents: Header, Row, Cell, Pagination\n6. Ensure proper keyboard navigation within the table\n7. Add necessary ARIA attributes and roles for accessibility\n8. Implement virtualization for large datasets using solid-virtual-list\n9. Create a useDataTable hook for easy table configuration\n10. Implement responsive design for mobile devices\n11. Create storybook stories showcasing various data table configurations",
+        "testStrategy": "Write comprehensive unit tests for the DataTable component and all subcomponents. Test sorting, filtering, pagination, and row selection functionality. Verify proper keyboard navigation and accessibility features. Test virtualization with large datasets. Perform visual regression testing against the shadcn-ui DataTable component. Test responsive behavior across different screen sizes.",
+        "priority": "high",
+        "dependencies": [
+          2,
+          3,
+          4,
+          5,
+          20
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 23,
+        "title": "Create Date Picker Component",
+        "description": "Update the existing Date Picker component in the SolidJS implementation to match the functionality and styling of the React v4 Date Picker component.",
+        "status": "pending",
+        "dependencies": [
+          2,
+          3,
+          4,
+          5,
+          13
+        ],
+        "priority": "medium",
+        "details": "1. Modify the existing date-picker component that uses Ark UI primitives\n2. Update styling to match the React v4 Date Picker component\n3. Ensure feature parity with React v4 implementation\n4. Verify and enhance subcomponents: Calendar, MonthSelect, YearSelect as needed\n5. Review and update date selection, month/year navigation, and range selection functionality\n6. Verify and improve keyboard navigation within the date picker\n7. Ensure all ARIA attributes and roles are properly implemented for accessibility\n8. Optimize transitions between months/years using SolidJS Transition API\n9. Verify localization support for different date formats and languages\n10. Update storybook stories to showcase the enhanced date picker configurations",
+        "testStrategy": "Write comprehensive unit tests for the updated DatePicker component and all subcomponents. Test date selection, navigation, and range selection functionality. Verify proper keyboard navigation and accessibility features. Test localization with different locales. Perform visual regression testing against the React v4 DatePicker component. Test animation and transition effects across different browsers.",
+        "subtasks": []
+      },
+      {
+        "id": 24,
+        "title": "Implement Navigation Menu Component",
+        "description": "Create the Navigation Menu component for SolidJS, ensuring feature parity and styling consistency with the shadcn-ui version.",
+        "details": "1. Create src/components/ui/navigation-menu.tsx\n2. Implement the NavigationMenu component using SolidJS's createSignal for state management\n3. Create subcomponents: List, Item, Link, Content, Trigger\n4. Ensure proper keyboard navigation within the menu\n5. Implement proper focus management when opening/closing submenus\n6. Add necessary ARIA attributes and roles for accessibility\n7. Use SolidJS Transition API for enter/exit animations of submenus\n8. Implement responsive design for mobile devices\n9. Create storybook stories showcasing various navigation menu configurations",
+        "testStrategy": "Write comprehensive unit tests for the NavigationMenu component and all subcomponents. Test keyboard navigation, focus management, and accessibility features. Verify proper functioning of submenus. Perform visual regression testing against the shadcn-ui NavigationMenu component. Test responsive behavior across different screen sizes. Test animation and transition effects across different browsers.",
+        "priority": "medium",
+        "dependencies": [
+          2,
+          3,
+          4
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 25,
+        "title": "Develop Form Validation System",
+        "description": "Implement a form validation system that works seamlessly with all form-related components in the SolidJS port of shadcn-ui.",
+        "details": "1. Create src/lib/form-validation.ts\n2. Integrate with a validation library like zod or yup\n3. Implement a useForm hook for easy form state management and validation\n4. Create FormProvider component for context-based form management\n5. Implement field-level validation with real-time feedback\n6. Create FormField component for easy integration with existing form components\n7. Implement form-level validation and submission handling\n8. Add support for custom validation rules\n9. Ensure proper error message display and styling\n10. Create comprehensive documentation and examples for form validation usage\n11. Implement integration with all existing form-related components (Input, Select, Checkbox, etc.)\n12. Create storybook stories showcasing various form validation scenarios",
+        "testStrategy": "Write unit tests for all form validation utilities and components. Test integration with various form components. Verify proper functioning of field-level and form-level validation. Test custom validation rules. Create example forms with complex validation scenarios and test thoroughly. Ensure proper error message display and accessibility.",
+        "priority": "high",
+        "dependencies": [
+          2,
+          3,
+          4,
+          5,
+          17,
+          18,
+          19,
+          20
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 26,
+        "title": "Add data-slot attributes to components for React v4 compatibility",
+        "description": "Systematically update all existing components by adding appropriate data-slot attributes to maintain styling consistency with React v4 implementation.",
+        "details": "1. Review React v4 documentation to understand the data-slot attribute requirements and implementation\n2. Create a comprehensive inventory of all existing components that need updates\n3. For each component, identify the appropriate elements that require data-slot attributes:\n   - Card and subcomponents (CardHeader, CardTitle, CardDescription, CardContent, CardFooter)\n   - Badge component\n   - Separator component\n   - Skeleton component\n   - Tabs and subcomponents (TabsList, TabsTrigger, TabsContent)\n   - Switch component\n   - Checkbox component\n   - Popover and subcomponents\n   - Tooltip and subcomponents\n   - Command and subcomponents\n4. Update each component by adding the appropriate data-slot attribute that matches the React v4 implementation\n5. Ensure the data-slot attribute values follow the naming conventions used in React v4\n6. Update component documentation to reflect the addition of data-slot attributes\n7. Verify that styling remains consistent after adding the attributes\n8. Ensure backward compatibility is maintained where possible\n9. Consider creating a utility function to standardize data-slot attribute application across components\n10. Update any relevant Storybook stories to demonstrate the proper use of data-slot attributes",
+        "testStrategy": "1. Create a comprehensive test suite that verifies each component correctly implements the required data-slot attributes\n2. Perform visual regression testing to ensure styling remains consistent after adding data-slot attributes\n3. Test each component in isolation to verify the data-slot attributes are correctly applied\n4. Create integration tests to ensure components work correctly together with the new attributes\n5. Verify accessibility is maintained by running automated accessibility tests\n6. Test across different browsers to ensure cross-browser compatibility\n7. Perform performance testing to ensure the addition of data-slot attributes doesn't negatively impact rendering performance\n8. Create a checklist of all components and verify each one against the React v4 implementation\n9. Update existing Storybook stories to include visual indicators of data-slot attributes\n10. Conduct manual testing of complex component compositions to ensure styling consistency is maintained",
+        "status": "done",
+        "dependencies": [
+          6,
+          7,
+          8,
+          9,
+          13,
+          14,
+          16,
+          17,
+          18,
+          21
+        ],
+        "priority": "high",
+        "subtasks": []
+      },
+      {
+        "id": 27,
+        "title": "Implement Form Component with Validation System",
+        "description": "Create a comprehensive Form component that handles validation, error states, and integrates with existing input components, ensuring proper form management for SolidJS applications.",
+        "details": "1. Create src/components/ui/form.tsx\n2. Implement the Form component using SolidJS's createSignal and createStore for state management\n3. Create subcomponents:\n   - FormField: Container for form inputs with associated label and error message\n   - FormItem: Wrapper for individual form elements\n   - FormLabel: Styled label component\n   - FormControl: Wrapper for the actual input element\n   - FormDescription: Optional description text\n   - FormMessage: Error message display\n   - FormRoot: Main form container\n\n4. Implement a validation system that supports:\n   - Schema-based validation (using libraries like zod, yup, or valibot)\n   - Custom validation functions\n   - Field-level and form-level validation\n   - Async validation support\n\n5. Create a form context using SolidJS's createContext to share form state across components\n6. Implement error state handling:\n   - Visual indication of error states\n   - Accessible error messages\n   - Focus management for invalid fields\n\n7. Ensure integration with existing input components:\n   - Input\n   - Select\n   - Checkbox\n   - Radio\n   - Textarea\n   - Any other relevant input components\n\n8. Add proper ARIA attributes for accessibility:\n   - aria-invalid\n   - aria-describedby\n   - aria-errormessage\n\n9. Implement form submission handling:\n   - Prevent default submission\n   - Validate all fields before submission\n   - Support for both synchronous and asynchronous submission\n   - Loading state during submission\n\n10. Create comprehensive documentation and examples:\n    - Basic form usage\n    - Complex validation examples\n    - Integration with different input types\n    - Form submission patterns\n\n11. Create storybook stories showcasing various form configurations and validation scenarios",
+        "testStrategy": "1. Write unit tests for the Form component and all subcomponents:\n   - Test form initialization with different validation schemas\n   - Test field-level validation\n   - Test form-level validation\n   - Test error state management\n   - Test form submission with both valid and invalid data\n\n2. Create integration tests that verify:\n   - Proper integration with all input component types\n   - Form state management across multiple fields\n   - Validation error propagation\n   - Form submission workflow\n\n3. Test accessibility features:\n   - Verify proper ARIA attributes are applied\n   - Test keyboard navigation within the form\n   - Ensure error messages are properly associated with their fields\n   - Test screen reader announcements for validation errors\n\n4. Test edge cases:\n   - Very large forms with many fields\n   - Complex nested validation rules\n   - Conditional field validation\n   - Async validation with varying response times\n\n5. Perform visual regression testing:\n   - Compare styling against the shadcn-ui Form component\n   - Test error state styling across different themes\n   - Verify responsive behavior on different screen sizes\n\n6. Create end-to-end tests for complete form workflows:\n   - User filling out a form with validation\n   - Error correction and resubmission\n   - Successful form submission",
+        "status": "done",
+        "dependencies": [
+          2,
+          3,
+          4
+        ],
+        "priority": "high",
+        "subtasks": []
+      },
+      {
+        "id": 28,
+        "title": "Implement Sidebar Component",
+        "description": "Create a comprehensive Sidebar component with all necessary sub-components for modern application layouts, ensuring feature parity with the React v4 implementation.",
+        "details": "1. Create src/components/ui/sidebar.tsx\n2. Implement the main Sidebar component using SolidJS's createSignal and createContext for state management\n3. Create the following sub-components:\n   - SidebarProvider: Context provider for sidebar state management\n   - SidebarContent: Container for sidebar content\n   - SidebarMenu: Navigation menu container within the sidebar\n   - SidebarMenuItem: Individual navigation items\n   - SidebarHeader: Optional header section\n   - SidebarFooter: Optional footer section\n   - SidebarTrigger: Component to toggle sidebar visibility on mobile\n   - SidebarOverlay: Overlay for mobile view when sidebar is open\n4. Implement responsive behavior:\n   - Collapsible sidebar with expanded/collapsed states\n   - Mobile-friendly with slide-in/out animations\n   - Proper overlay handling for mobile views\n5. Ensure proper keyboard navigation within the sidebar menu\n6. Add necessary ARIA attributes and roles for accessibility\n7. Use SolidJS Transition API for smooth animations\n8. Implement proper focus management when opening/closing the sidebar\n9. Create variants for different sidebar styles (light/dark, fixed/floating)\n10. Ensure the sidebar works well with the existing component library\n11. Create storybook stories showcasing various sidebar configurations and states\n12. Document usage patterns and integration examples",
+        "testStrategy": "1. Write comprehensive unit tests for the Sidebar component and all sub-components:\n   - Test state management through the SidebarProvider\n   - Test responsive behavior at different viewport sizes\n   - Test keyboard navigation within the sidebar menu\n   - Test focus management when opening/closing the sidebar\n   - Test all variants and configurations\n\n2. Create integration tests to verify:\n   - Proper interaction with other layout components\n   - Correct behavior when navigating between routes\n   - State persistence across navigation events\n\n3. Perform accessibility testing:\n   - Verify proper ARIA attributes and roles\n   - Test keyboard navigation and screen reader compatibility\n   - Ensure focus trapping works correctly on mobile\n\n4. Conduct visual regression testing:\n   - Compare against design specifications\n   - Verify consistent styling across different browsers and devices\n   - Test animations and transitions for smoothness\n\n5. Create user testing scenarios to validate:\n   - Intuitive navigation experience\n   - Proper mobile interaction patterns\n   - Performance with large navigation structures",
+        "status": "done",
+        "dependencies": [
+          2,
+          3,
+          4,
+          24
+        ],
+        "priority": "high",
+        "subtasks": []
+      },
+      {
+        "id": 29,
+        "title": "Implement Avatar Component",
+        "description": "Create the Avatar component with AvatarImage and AvatarFallback subcomponents, leveraging or refactoring the existing image component that uses Kobalte primitives to match the React v4 Avatar implementation.",
+        "status": "done",
+        "dependencies": [
+          2,
+          3
+        ],
+        "priority": "high",
+        "details": "1. Review the existing image component that uses Kobalte primitives\n2. Determine whether to:\n   - Use the existing image component as a base for the Avatar component\n   - Refactor/rename the existing image component to create the Avatar component\n   - Create a new Avatar component that aligns with the React v4 implementation\n3. Create src/components/ui/avatar.tsx based on the chosen approach\n4. Implement the main Avatar component using SolidJS's createComponent\n5. Create the following subcomponents:\n   - AvatarImage: Handles the image display with proper loading states (leverage existing image functionality if appropriate)\n   - AvatarFallback: Displays when the image fails to load or is not provided (leverage existing fallback functionality if appropriate)\n6. Use the 'cn' utility for class merging\n7. Implement proper image loading state handling:\n   - Show fallback during image loading\n   - Handle image load errors gracefully\n   - Transition smoothly between states\n8. Add support for different avatar sizes (sm, md, lg, custom)\n9. Implement proper border-radius and styling consistent with shadcn-ui\n10. Ensure AvatarFallback can accept text initials, icons, or custom content\n11. Add ARIA attributes for accessibility (aria-label, role)\n12. Implement optional delayMs prop to control when fallback shows during loading\n13. Create storybook stories showcasing:\n    - Different avatar sizes\n    - Various fallback content types\n    - Image loading states\n    - Error handling scenarios\n14. Add TypeScript interfaces for all component props\n15. Document the relationship between the Avatar component and the existing image component",
+        "testStrategy": "1. Write unit tests for the Avatar component and all subcomponents:\n   - Test proper rendering of the Avatar container\n   - Test AvatarImage loading states\n   - Test AvatarFallback rendering when image fails or is absent\n   - Test proper application of size variants\n2. Create visual regression tests comparing against the shadcn-ui Avatar component\n3. Test accessibility by verifying proper ARIA attributes are applied\n4. Test the delayMs functionality to ensure fallback shows appropriately\n5. Test with various image types and sizes to ensure proper scaling\n6. Test error handling by intentionally providing invalid image sources\n7. Verify smooth transitions between loading, success, and error states\n8. Test with different types of fallback content (text, icons, components)\n9. If leveraging the existing image component, test that the Avatar component maintains all the functionality of the original component\n10. Test compatibility with existing code that might be using the image component",
+        "subtasks": []
+      },
+      {
+        "id": 30,
+        "title": "Implement Label Component",
+        "description": "Create the Label component as an essential form element for SolidJS, ensuring proper accessibility and integration with other form components.",
+        "details": "1. Create src/components/ui/label.tsx\n2. Implement the Label component using SolidJS's createComponent\n3. Use the 'cn' utility for class merging\n4. Ensure proper HTML semantics by using the native `<label>` element\n5. Implement the 'for' attribute to associate labels with form controls\n6. Add proper TypeScript typing for props including:\n   - htmlFor: string (to link with form control id)\n   - optional: boolean (to indicate if the associated field is required)\n   - disabled: boolean (to match styling with disabled form controls)\n7. Implement proper ARIA attributes for accessibility\n8. Create variants for different visual states (default, error, disabled)\n9. Ensure consistent styling with other form components\n10. Add support for custom class names to allow styling flexibility\n11. Implement proper focus states for keyboard navigation\n12. Create storybook stories showcasing the Label component in various states and with different form controls\n13. Document usage patterns for proper integration with other form components",
+        "testStrategy": "1. Write unit tests for the Label component covering:\n   - Proper rendering of the label text\n   - Correct application of the 'for' attribute\n   - Proper handling of optional and disabled states\n   - Correct application of custom class names\n2. Test accessibility by verifying:\n   - Proper association with form controls\n   - Correct ARIA attributes\n   - Keyboard focus behavior\n3. Create integration tests with other form components to ensure:\n   - Proper association between labels and inputs\n   - Consistent styling across form elements\n   - Correct behavior when clicking on labels (should focus the associated input)\n4. Perform visual regression testing against the shadcn-ui Label component\n5. Test screen reader compatibility to ensure proper announcement of labels\n6. Verify that the component works correctly across different browsers and screen sizes",
+        "status": "done",
+        "dependencies": [
+          2,
+          3
+        ],
+        "priority": "high",
+        "subtasks": []
+      },
+      {
+        "id": 31,
+        "title": "Modernize Alert Component with Grid-Based Layout",
+        "description": "Update the Alert component to use React v4 grid-based layout approach instead of the current outdated absolute positioning, implementing proper data-slot attributes and improved spacing logic.",
+        "details": "1. Locate and analyze the current Alert component implementation\n2. Refactor the component to use CSS Grid layout instead of absolute positioning:\n   - Replace absolute positioning styles with grid template areas\n   - Define appropriate grid columns and rows for different alert variants\n   - Implement responsive behavior using grid properties\n3. Add proper data-slot attributes to all child elements:\n   - data-slot=\"icon\" for the alert icon\n   - data-slot=\"title\" for the alert title\n   - data-slot=\"description\" for the alert description\n   - data-slot=\"action\" for any action buttons\n4. Improve spacing logic:\n   - Use gap properties for consistent spacing between elements\n   - Implement responsive spacing that adjusts based on viewport size\n   - Ensure proper alignment of all elements within the grid\n5. Update variant styles to work with the new grid layout:\n   - Ensure default, destructive, and other variants maintain their visual identity\n   - Adjust padding and margin values as needed for the grid layout\n6. Maintain backward compatibility:\n   - Ensure existing props continue to work as expected\n   - Document any breaking changes in component behavior\n7. Update component documentation to reflect the new grid-based implementation\n8. Create examples demonstrating the improved layout capabilities",
+        "testStrategy": "1. Write unit tests to verify the component renders correctly with the new grid layout\n2. Test all variants (default, destructive, etc.) to ensure they maintain their visual identity\n3. Verify that all data-slot attributes are correctly applied and function as expected\n4. Test responsive behavior by rendering the component at different viewport sizes\n5. Conduct accessibility testing to ensure the component remains accessible\n6. Perform visual regression testing comparing the old and new implementations\n7. Test with different content lengths to ensure the grid layout handles varying content appropriately\n8. Verify that any existing code using the Alert component continues to work correctly\n9. Test with and without optional elements (icon, title, description, action) to ensure proper layout in all scenarios\n10. Create a storybook story showcasing the modernized Alert component with various configurations",
+        "status": "done",
+        "dependencies": [
+          2,
+          3
+        ],
+        "priority": "high",
+        "subtasks": []
+      },
+      {
+        "id": 32,
+        "title": "Implement Breadcrumb Component",
+        "description": "Create a comprehensive Breadcrumb component with all necessary subcomponents for navigation, ensuring proper accessibility and styling consistency with the shadcn-ui design system.",
+        "details": "1. Create src/components/ui/breadcrumb.tsx\n2. Implement the main Breadcrumb component using SolidJS's createComponent\n3. Create the following subcomponents:\n   - BreadcrumbList: Container for breadcrumb items\n   - BreadcrumbItem: Individual navigation item wrapper\n   - BreadcrumbLink: Clickable link for navigating to a specific route\n   - BreadcrumbPage: Current/active page indicator (non-clickable)\n   - BreadcrumbSeparator: Visual separator between breadcrumb items\n   - BreadcrumbEllipsis: Component for collapsed breadcrumbs in responsive views\n4. Use the 'cn' utility for class merging\n5. Implement proper ARIA attributes according to WAI-ARIA Breadcrumb pattern:\n   - Use nav element with aria-label=\"Breadcrumb\"\n   - Use ordered list (ol) for BreadcrumbList\n   - Use proper aria-current=\"page\" for the current page\n6. Implement responsive behavior:\n   - Allow collapsing of middle items on smaller screens\n   - Use BreadcrumbEllipsis to indicate collapsed items\n7. Ensure proper keyboard navigation between breadcrumb links\n8. Support customization of separators (icon, text, or component)\n9. Implement proper TypeScript typing for all components and props\n10. Create storybook stories showcasing various breadcrumb configurations:\n    - Basic breadcrumb trail\n    - With custom separators\n    - With collapsed items (responsive)\n    - With different styling variants",
+        "testStrategy": "1. Write unit tests for the Breadcrumb component and all subcomponents:\n   - Test proper rendering of the breadcrumb structure\n   - Test correct application of ARIA attributes\n   - Test proper rendering of separators\n   - Test ellipsis functionality for collapsed items\n   - Test proper application of custom class names\n2. Test accessibility by verifying:\n   - Proper navigation structure with screen readers\n   - Keyboard navigation between breadcrumb links\n   - Correct aria-current attribute on the current page\n3. Create visual regression tests to compare against the shadcn-ui design system\n4. Test responsive behavior:\n   - Verify proper collapsing of items on smaller viewports\n   - Test that ellipsis appears correctly when items are collapsed\n5. Integration tests:\n   - Test integration with routing system (if applicable)\n   - Test that correct routes are navigated to when links are clicked\n6. Cross-browser testing to ensure consistent appearance and functionality",
+        "status": "done",
+        "dependencies": [
+          2,
+          3,
+          4
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 33,
+        "title": "Implement Calendar Component for Date Selection",
+        "description": "Create a full-featured Calendar component for SolidJS that provides date selection functionality, matching the React v4 implementation with all necessary subcomponents and interactions.",
+        "details": "1. Create src/components/ui/calendar.tsx\n2. Implement the main Calendar component using SolidJS's createSignal and createStore for state management\n3. Create the following subcomponents:\n   - CalendarHeader: Contains navigation controls and month/year display\n   - CalendarGrid: The main calendar grid showing days\n   - CalendarNavigation: Previous/next month controls\n   - CalendarCell: Individual day cells with selection states\n   - CalendarMonthSelector: For quickly jumping to specific months\n   - CalendarYearSelector: For quickly jumping to specific years\n4. Implement the following features:\n   - Single date selection\n   - Date range selection\n   - Multiple date selection\n   - Min/max date constraints\n   - Disabled dates functionality\n   - Custom day rendering\n   - Localization support using Intl API\n   - Keyboard navigation between days, weeks, and months\n5. Ensure proper accessibility with ARIA attributes and keyboard support:\n   - Use appropriate ARIA roles (grid, gridcell, etc.)\n   - Implement proper focus management\n   - Add screen reader announcements for selection changes\n6. Implement responsive design for mobile and desktop viewports\n7. Add animations for month transitions using SolidJS Transition API\n8. Create storybook stories showcasing various calendar configurations and selection modes\n9. Ensure the component works in both controlled and uncontrolled modes",
+        "testStrategy": "1. Write comprehensive unit tests for the Calendar component and all subcomponents:\n   - Test date selection functionality (single, range, multiple)\n   - Test navigation between months and years\n   - Test min/max date constraints\n   - Test disabled dates functionality\n   - Test keyboard navigation\n   - Test proper focus management\n   - Test screen reader accessibility\n2. Create visual regression tests to compare against the React v4 implementation\n3. Test internationalization by verifying correct display with different locales\n4. Test responsive behavior at different viewport sizes\n5. Perform accessibility testing:\n   - Verify all interactive elements are keyboard accessible\n   - Test with screen readers to ensure proper announcements\n   - Verify sufficient color contrast for selected and highlighted dates\n6. Test edge cases:\n   - Month/year boundaries\n   - Leap years\n   - Different timezones\n   - DST transitions\n7. Create integration tests with form components to verify proper form submission with selected dates",
+        "status": "done",
+        "dependencies": [
+          2,
+          3,
+          4
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 34,
+        "title": "Implement Slider Component",
+        "description": "Create a Slider component for range input functionality, enabling users to select numeric values within a specified range with proper accessibility and value management.",
+        "details": "1. Create src/components/ui/slider.tsx\n2. Implement the Slider component using SolidJS's createSignal for state management\n3. Support both controlled and uncontrolled usage modes\n4. Implement the following features:\n   - Min and max value configuration\n   - Step size customization\n   - Single thumb and range (dual thumb) modes\n   - Proper keyboard navigation (arrow keys for incremental changes)\n   - Touch and mouse event handling\n   - Accessible drag functionality\n5. Add proper ARIA attributes:\n   - aria-valuemin, aria-valuemax, aria-valuenow\n   - aria-orientation (horizontal/vertical)\n   - aria-disabled when in disabled state\n6. Implement visual elements:\n   - Track (background rail)\n   - Active track (filled portion)\n   - Thumb(s) for dragging\n   - Optional tick marks for value steps\n7. Add support for custom formatting of displayed values\n8. Implement proper focus and hover states with appropriate styling\n9. Create storybook stories showcasing:\n   - Basic slider with default configuration\n   - Range slider with dual thumbs\n   - Slider with custom step sizes and tick marks\n   - Disabled state\n   - Vertical orientation\n10. Ensure smooth animations for thumb movement and track filling",
+        "testStrategy": "1. Write unit tests for the Slider component covering:\n   - Proper initialization with default and custom values\n   - Correct value updates through user interaction\n   - Proper constraint handling (min/max boundaries)\n   - Step size adherence\n   - Range selection functionality\n   - Keyboard navigation and accessibility\n   - Touch and mouse event handling\n\n2. Test accessibility by verifying:\n   - Proper ARIA attributes are applied\n   - Keyboard navigation works as expected\n   - Focus states are visually apparent\n   - Screen reader compatibility\n\n3. Perform visual regression testing:\n   - Compare against design specifications\n   - Test in different browsers and screen sizes\n   - Verify proper rendering of all visual elements\n\n4. Integration testing:\n   - Test integration with form components\n   - Verify proper value propagation in controlled mode\n   - Test form submission with slider values\n\n5. User testing:\n   - Verify smooth drag experience\n   - Test touch interactions on mobile devices\n   - Ensure the component feels responsive and intuitive",
+        "status": "done",
+        "dependencies": [
+          2,
+          3,
+          4,
+          30
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 35,
+        "title": "Implement AspectRatio Component",
+        "description": "Create a utility component that maintains proper aspect ratios for content, ensuring consistent proportional dimensions regardless of container size.",
+        "details": "1. Create src/components/ui/aspect-ratio.tsx\n2. Implement the AspectRatio component using SolidJS's createComponent\n3. Use the 'cn' utility for class merging\n4. Implement the following features:\n   - Accept a 'ratio' prop that defines the desired aspect ratio (default to 16/9)\n   - Support custom ratios like 1/1 (square), 4/3, 21/9, etc.\n   - Use CSS to maintain the aspect ratio (padding-bottom technique)\n   - Ensure content is properly positioned within the container\n   - Allow for overflow handling configuration\n5. Ensure proper TypeScript typing for all props:\n   - ratio: number (the aspect ratio as width/height)\n   - class/className: string (for custom styling)\n   - children: JSX elements (the content to maintain aspect ratio for)\n6. Create storybook stories showcasing:\n   - Different aspect ratios (1:1, 16:9, 4:3, etc.)\n   - Various content types (images, videos, embedded content)\n   - Responsive behavior\n7. Document usage examples in comments or storybook\n8. Implement proper handling of resize events if necessary\n9. Ensure the component works well with images, videos, and other media content",
+        "testStrategy": "1. Write unit tests for the AspectRatio component covering:\n   - Proper rendering with default ratio (16:9)\n   - Correct application of custom ratios\n   - Proper containment of children elements\n   - Correct calculation of padding-bottom based on ratio\n   - Proper application of custom class names\n2. Create visual regression tests to verify:\n   - Consistent aspect ratio maintenance across different viewport sizes\n   - Proper rendering with different content types (images, videos)\n3. Test browser compatibility across:\n   - Chrome, Firefox, Safari, and Edge\n   - Mobile and desktop viewports\n4. Create integration tests with:\n   - Image components to verify proper image containment\n   - Video components to ensure media maintains proper proportions\n5. Verify accessibility by ensuring the component doesn't interfere with screen readers or keyboard navigation",
+        "status": "pending",
+        "dependencies": [
+          2,
+          3
+        ],
+        "priority": "low",
+        "subtasks": []
+      },
+      {
+        "id": 36,
+        "title": "Implement AspectRatio Component",
+        "description": "Create an AspectRatio component that maintains consistent proportional dimensions for responsive content regardless of container size.",
+        "details": "1. Create src/components/ui/aspect-ratio.tsx\n2. Implement the AspectRatio component using SolidJS's createComponent\n3. Use the 'cn' utility for class merging and Tailwind CSS for styling\n4. Implement the following features:\n   - Accept a 'ratio' prop that defines the desired aspect ratio (default to 16/9)\n   - Support custom ratios like 1/1 (square), 4/3, 21/9, etc.\n   - Use CSS to maintain the aspect ratio (padding-bottom technique)\n   - Ensure content is properly positioned within the container using absolute positioning\n   - Allow for overflow handling options\n   - Ensure the component works with both images and other content types\n5. Ensure proper TypeScript typing for all props:\n   - ratio: number (the aspect ratio as a decimal, e.g., 16/9)\n   - class: string (for custom styling)\n   - children: JSX elements to be rendered inside the container\n6. Add JSDoc comments for component documentation\n7. Create storybook stories showcasing:\n   - Default 16:9 ratio\n   - Square (1:1) ratio\n   - Custom ratios\n   - Different content types (images, videos, etc.)\n   - Responsive behavior\n8. Ensure the component matches the behavior and styling of the shadcn-ui React implementation",
+        "testStrategy": "1. Write unit tests for the AspectRatio component covering:\n   - Proper rendering with default ratio (16:9)\n   - Correct application of custom ratios\n   - Proper containment of children elements\n   - Correct calculation of padding-bottom based on ratio\n   - Proper application of custom class names\n2. Create visual regression tests comparing the component against the shadcn-ui React implementation\n3. Test responsive behavior by:\n   - Verifying the aspect ratio is maintained at different viewport sizes\n   - Checking that content scales appropriately\n4. Test with different content types:\n   - Images (loaded and loading states)\n   - Videos\n   - Complex nested components\n5. Verify accessibility by ensuring the component doesn't interfere with screen readers or keyboard navigation\n6. Test browser compatibility across Chrome, Firefox, Safari, and Edge",
+        "status": "done",
+        "dependencies": [
+          2,
+          3
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 37,
+        "title": "Implement Chart Component for Data Visualization",
+        "description": "Create a Chart component that provides data visualization capabilities with proper theming and integration with the shadcn-ui design system.",
+        "details": "1. Create src/components/ui/chart.tsx\n2. Implement the Chart component using SolidJS's createComponent\n3. Use the 'cn' utility for class merging and Tailwind CSS for styling\n4. Integrate with a charting library (such as Chart.js, D3.js, or Recharts) adapted for SolidJS\n5. Create the following subcomponents:\n   - ChartContainer: Main wrapper for chart visualization\n   - ChartLegend: Component for displaying chart legends\n   - ChartTooltip: Interactive tooltip for data point information\n   - ChartControls: Optional controls for chart interaction (zoom, pan, etc.)\n6. Implement theming support to match the shadcn-ui design system:\n   - Use CSS variables for colors that respect the current theme\n   - Ensure proper dark/light mode transitions\n   - Match typography and spacing from the design system\n7. Support multiple chart types:\n   - Line charts\n   - Bar charts\n   - Pie/Donut charts\n   - Area charts\n   - Scatter plots\n8. Implement responsive behavior:\n   - Adjust chart size based on container dimensions\n   - Optimize for mobile viewing\n   - Handle resize events appropriately\n9. Add proper accessibility features:\n   - Include appropriate ARIA attributes\n   - Ensure keyboard navigation for interactive elements\n   - Add screen reader descriptions for data visualization\n10. Create storybook stories showcasing various chart types and configurations\n11. Document props and usage examples in comments and storybook",
+        "testStrategy": "1. Write unit tests for the Chart component and all subcomponents:\n   - Test proper rendering of different chart types\n   - Test theme integration and proper color application\n   - Test responsive behavior at different viewport sizes\n   - Test accessibility features and ARIA attributes\n   - Test proper data binding and updates\n\n2. Create visual regression tests:\n   - Compare rendered charts against design specifications\n   - Verify proper theming in both light and dark modes\n   - Test across different browsers and screen sizes\n\n3. Performance testing:\n   - Measure render time with various data set sizes\n   - Test animation smoothness and frame rates\n   - Verify memory usage with large datasets\n\n4. Integration testing:\n   - Test integration with the rest of the UI component system\n   - Verify proper theming inheritance\n   - Test in combination with other components (Card, Tabs, etc.)\n\n5. User testing:\n   - Verify readability of chart data\n   - Test interactive features like tooltips and zooming\n   - Ensure accessibility for screen readers and keyboard navigation",
+        "status": "pending",
+        "dependencies": [
+          2,
+          3,
+          4
+        ],
+        "priority": "low",
+        "subtasks": []
+      },
+      {
+        "id": 38,
+        "title": "Implement Input OTP Component",
+        "description": "Rename the existing otp-field component to input-otp to match React v4 naming conventions and update the component to match React v4 Input OTP styling and functionality.",
+        "status": "done",
+        "dependencies": [
+          2,
+          3,
+          4,
+          30
+        ],
+        "priority": "medium",
+        "details": "1. Locate the existing otp-field component that uses Corvu primitives\n2. Rename the component from otp-field to input-otp in src/components/ui/input-otp.tsx\n3. Update imports and references throughout the codebase to use the new name\n4. Review and update the styling to match React v4 Input OTP component design\n5. Ensure the following features are implemented or updated to match React v4:\n   - Support for numeric-only or alphanumeric input modes\n   - Configurable length (4-8 digits typically)\n   - Auto-focus on the next input field after entry\n   - Support for pasting the entire OTP code\n   - Keyboard navigation between input fields (arrow keys)\n   - Automatic selection of field content on focus\n   - Support for grouping digits (e.g., 3-3 or 2-2-2 format)\n6. Update or implement proper validation:\n   - Input type restrictions (numeric/alphanumeric)\n   - Complete/incomplete state tracking\n   - Integration with form validation libraries\n7. Review and enhance accessibility:\n   - Proper ARIA attributes (aria-label, aria-invalid)\n   - Clear focus indicators\n   - Screen reader announcements for errors\n   - Keyboard-only operation support\n8. Update existing storybook stories or create new ones to showcase the updated component:\n   - Different lengths and groupings\n   - With and without separators\n   - Different validation states\n   - Mobile and desktop interactions",
+        "testStrategy": "1. Review and update existing unit tests for the renamed InputOTP component:\n   - Test proper rendering of the input fields based on length prop\n   - Test character input restrictions (numeric vs. alphanumeric)\n   - Test auto-focus behavior when typing\n   - Test keyboard navigation (arrow keys, backspace, delete)\n   - Test paste functionality with various input formats\n   - Test grouping and separator rendering\n   - Test proper application of validation states\n\n2. Update or add integration tests:\n   - Test complete form submission with OTP validation\n   - Test error handling and display\n   - Test interaction with form validation libraries\n\n3. Verify accessibility compliance after updates:\n   - Verify proper keyboard navigation\n   - Test with screen readers to ensure proper announcements\n   - Verify sufficient color contrast for focus and error states\n   - Test with various input methods (keyboard, touch, screen readers)\n\n4. Conduct regression testing:\n   - Ensure existing functionality continues to work after renaming\n   - Test on mobile devices to ensure proper virtual keyboard behavior\n   - Test copy/paste functionality across different browsers\n   - Verify proper touch target sizes for mobile use",
+        "subtasks": []
+      },
+      {
+        "id": 39,
+        "title": "Implement Scroll Area Component",
+        "description": "Create a Scroll Area component that provides enhanced scrolling experience with customizable scrollbar appearance, maintaining styling consistency with the shadcn-ui design system.",
+        "details": "1. Create src/components/ui/scroll-area.tsx\n2. Implement the main ScrollArea component using SolidJS's createComponent\n3. Create the following subcomponents:\n   - ScrollAreaViewport: Container for the scrollable content\n   - ScrollAreaScrollbar: Customizable scrollbar component\n   - ScrollAreaThumb: Draggable thumb element for the scrollbar\n   - ScrollAreaCorner: Component for the corner where horizontal and vertical scrollbars meet\n4. Use the 'cn' utility for class merging\n5. Implement both horizontal and vertical scrolling capabilities\n6. Add proper TypeScript typing for props including:\n   - type: 'auto' | 'always' | 'scroll' | 'hover' (to control scrollbar visibility)\n   - dir: 'ltr' | 'rtl' (for directional support)\n   - scrollHideDelay: number (milliseconds before scrollbar hides)\n7. Ensure proper ARIA attributes and roles for accessibility\n8. Implement smooth scrolling behavior\n9. Add support for custom scrollbar styling (width, color, etc.)\n10. Handle overflow detection to show/hide scrollbars as needed\n11. Implement proper event handling for scrollbar interaction\n12. Create storybook stories showcasing various scroll area configurations\n13. Ensure the component works well with dynamic content that may change in size",
+        "testStrategy": "1. Write unit tests for the ScrollArea component and all subcomponents:\n   - Test proper rendering of the scroll area container\n   - Test viewport rendering and content containment\n   - Test scrollbar appearance in different visibility modes\n   - Test proper thumb sizing based on content size\n   - Test scrollbar interaction (clicking, dragging)\n   - Test proper application of custom class names\n2. Test accessibility by verifying:\n   - Proper ARIA attributes are applied\n   - Keyboard navigation works correctly\n   - Focus management is handled appropriately\n3. Perform visual regression testing against the shadcn-ui ScrollArea component\n4. Test with various content sizes:\n   - Content smaller than viewport (no scrollbars needed)\n   - Content larger than viewport (scrollbars needed)\n   - Dynamic content that changes size\n5. Test across different browsers to ensure consistent scrollbar behavior\n6. Test performance with large content to ensure smooth scrolling\n7. Test RTL (right-to-left) support if implemented",
+        "status": "pending",
+        "dependencies": [
+          2,
+          3
+        ],
+        "priority": "low",
+        "subtasks": []
+      },
+      {
+        "id": 40,
+        "title": "Update Accordion Component to Match React v4 Implementation",
+        "description": "Refactor the existing Accordion component to align with React v4 styling and functionality standards, ensuring consistent behavior and visual appearance with the latest design system.",
+        "details": "1. Locate and analyze the current Accordion component implementation\n2. Review React v4 documentation for Accordion component specifications\n3. Update component structure:\n   - Implement proper data-slot attributes for all child elements\n   - Add data-state attributes for open/closed states\n   - Ensure correct ARIA attributes for accessibility\n4. Refactor styling to match React v4:\n   - Update CSS to use modern grid-based layout where appropriate\n   - Implement consistent spacing and padding\n   - Ensure proper animation for expand/collapse transitions\n5. Update component API:\n   - Ensure props match React v4 implementation\n   - Maintain backward compatibility where possible\n   - Add any new features from React v4 (e.g., custom indicators, collapsible behavior)\n6. Implement proper keyboard navigation:\n   - Arrow keys to navigate between accordion items\n   - Space/Enter to toggle accordion state\n7. Update documentation and examples to reflect changes\n8. Create storybook stories showcasing various accordion configurations and states\n9. Ensure the component works in both controlled and uncontrolled modes",
+        "testStrategy": "1. Write unit tests for the updated Accordion component and all subcomponents\n2. Test all states (open, closed, disabled) to ensure they render correctly\n3. Verify that all data-slot and data-state attributes are correctly applied\n4. Test keyboard navigation functionality:\n   - Arrow keys navigate between items\n   - Space/Enter toggles accordion state\n5. Test accessibility features using screen readers and automated tools\n6. Perform visual regression testing against the React v4 Accordion component\n7. Test animation and transition effects across different browsers\n8. Verify both controlled and uncontrolled modes function correctly\n9. Test with different content types and lengths to ensure proper expansion behavior\n10. Ensure backward compatibility with existing implementations",
+        "status": "done",
+        "dependencies": [
+          2,
+          3,
+          31
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 41,
+        "title": "Update Carousel Component to Match React v4 Implementation",
+        "description": "Refactor the existing Carousel component to align with React v4 styling and functionality standards, ensuring consistent behavior and visual appearance with the latest design system.",
+        "details": "1. Locate and analyze the current Carousel component implementation\n2. Review React v4 documentation for Carousel component specifications\n3. Update component structure:\n   - Implement proper data-slot attributes for all child elements (data-slot=\"viewport\", data-slot=\"container\", data-slot=\"item\", data-slot=\"next\", data-slot=\"previous\")\n   - Add data-state attributes for active/inactive slides\n   - Ensure correct ARIA attributes for accessibility (aria-label, aria-controls, etc.)\n4. Refactor styling to match React v4:\n   - Update CSS to use modern grid-based layout where appropriate\n   - Implement consistent spacing and padding\n   - Update transition animations to match React v4 specifications\n   - Ensure responsive behavior across different viewport sizes\n5. Implement proper keyboard navigation:\n   - Arrow keys for navigating between slides\n   - Home/End keys for first/last slide\n   - Tab key for interactive elements within slides\n6. Update event handling:\n   - Implement touch gestures for mobile devices\n   - Add support for mouse drag interactions\n   - Ensure proper focus management during slide transitions\n7. Add support for autoplay functionality with configurable timing\n8. Implement pause-on-hover and pause-on-focus behavior\n9. Update documentation with new props and usage examples\n10. Create storybook stories showcasing various carousel configurations",
+        "testStrategy": "1. Write unit tests for the updated Carousel component and all subcomponents\n2. Test all states (active, inactive, transitioning) to ensure they render correctly\n3. Verify that all data-slot and data-state attributes are correctly applied\n4. Test keyboard navigation functionality:\n   - Arrow keys navigate between slides\n   - Home/End keys navigate to first/last slide\n   - Tab key properly focuses interactive elements\n5. Test touch and mouse interactions:\n   - Swipe gestures on touch devices\n   - Mouse drag functionality\n   - Click events on navigation buttons\n6. Test autoplay functionality:\n   - Verify slides advance at the specified interval\n   - Confirm pause-on-hover and pause-on-focus behaviors work correctly\n7. Test responsive behavior across different viewport sizes\n8. Perform visual regression testing against the React v4 Carousel component\n9. Test accessibility compliance using automated tools and screen readers\n10. Verify proper focus management during slide transitions",
+        "status": "done",
+        "dependencies": [
+          2,
+          3,
+          31,
+          40
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 42,
+        "title": "Update Collapsible Component to Match React v4 Implementation",
+        "description": "Refactor the existing Collapsible component to align with React v4 styling and functionality standards, ensuring consistent behavior and visual appearance with the latest design system.",
+        "details": "1. Locate and analyze the current Collapsible component implementation\n2. Review React v4 documentation for Collapsible component specifications\n3. Update component structure:\n   - Implement proper data-slot attributes for all child elements (data-slot=\"trigger\", data-slot=\"content\")\n   - Add data-state attributes for open/closed states (data-state=\"open\", data-state=\"closed\")\n   - Ensure correct ARIA attributes for accessibility (aria-expanded, aria-controls)\n4. Refactor styling to match React v4:\n   - Update CSS to use modern grid-based layout where appropriate\n   - Implement consistent spacing and padding\n   - Ensure smooth animation transitions for open/close states\n   - Apply correct border-radius and shadow effects according to design system\n5. Update event handling:\n   - Implement proper keyboard interaction (Space/Enter to toggle)\n   - Ensure focus management follows accessibility best practices\n6. Ensure component is fully responsive across all viewport sizes\n7. Update component documentation with new props and usage examples\n8. Create storybook stories showcasing various configurations and states",
+        "testStrategy": "1. Write unit tests for the updated Collapsible component and all subcomponents\n2. Test all states (open, closed, disabled) to ensure they render correctly\n3. Verify that all data-slot and data-state attributes are correctly applied\n4. Test keyboard navigation functionality:\n   - Space/Enter keys should toggle the collapsible state\n   - Tab key should navigate between focusable elements\n5. Test accessibility compliance:\n   - Verify ARIA attributes are correctly applied and updated\n   - Test with screen readers to ensure proper announcements\n6. Perform visual regression testing against React v4 design specifications\n7. Test animation performance across different browsers\n8. Verify responsive behavior at various viewport sizes\n9. Test integration with other components that might use Collapsible",
+        "status": "done",
+        "dependencies": [
+          2,
+          3,
+          31,
+          40
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 43,
+        "title": "Update Context Menu Component to Match React v4 Implementation",
+        "description": "Refactor the existing Context Menu component to align with React v4 styling and functionality standards, ensuring consistent behavior and visual appearance with the latest design system.",
+        "details": "1. Locate and analyze the current Context Menu component implementation\n2. Review React v4 documentation for Context Menu component specifications\n3. Update component structure:\n   - Implement proper data-slot attributes for all child elements (data-slot=\"trigger\", data-slot=\"content\", data-slot=\"item\", data-slot=\"separator\", data-slot=\"submenu\")\n   - Add data-state attributes for open/closed states (data-state=\"open\", data-state=\"closed\")\n   - Ensure correct ARIA attributes for accessibility (aria-expanded, aria-haspopup, aria-controls)\n4. Refactor styling to match React v4:\n   - Update CSS to use modern grid-based layout where appropriate\n   - Implement consistent spacing and padding\n   - Update animations for opening/closing to match React v4 specifications\n   - Ensure proper z-index handling for nested menus\n5. Enhance functionality:\n   - Implement proper keyboard navigation (arrow keys, Enter, Escape)\n   - Add support for submenu navigation\n   - Ensure proper focus management when opening/closing menus\n   - Implement click-outside behavior to close the menu\n6. Update event handling:\n   - Refactor event listeners to use modern React patterns\n   - Implement proper touch support for mobile devices\n7. Update documentation and examples:\n   - Create comprehensive documentation for the updated component\n   - Update example usage in storybook or documentation site\n8. Ensure backward compatibility:\n   - Maintain existing API where possible\n   - Document any breaking changes and provide migration guidance",
+        "testStrategy": "1. Write unit tests for the updated Context Menu component and all subcomponents\n2. Test all states (open, closed, disabled) to ensure they render correctly\n3. Verify that all data-slot and data-state attributes are correctly applied\n4. Test keyboard navigation functionality:\n   - Arrow keys for navigating between menu items\n   - Enter key for selecting items\n   - Escape key for closing menus\n   - Tab key for focus management\n5. Test submenu functionality:\n   - Opening/closing submenus\n   - Navigating between parent and child menus\n6. Test accessibility:\n   - Verify screen reader compatibility\n   - Check keyboard focus indicators\n   - Ensure proper ARIA attributes are present\n7. Test mobile interactions:\n   - Touch events for opening/closing menus\n   - Touch events for selecting items\n8. Perform visual regression testing:\n   - Compare against design specifications\n   - Ensure consistent appearance across browsers\n9. Test integration with other components:\n   - Verify context menus work correctly when used within other complex components",
+        "status": "done",
+        "dependencies": [
+          2,
+          3,
+          31,
+          40
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 44,
+        "title": "Update Drawer Component to Match React v4 Implementation",
+        "description": "Refactor the existing Drawer component to align with React v4 styling and functionality standards, ensuring consistent behavior and visual appearance with the latest design system.",
+        "details": "1. Locate and analyze the current Drawer component implementation\n2. Review React v4 documentation for Drawer component specifications\n3. Update component structure:\n   - Implement proper data-slot attributes for all child elements (data-slot=\"trigger\", data-slot=\"content\", data-slot=\"close\")\n   - Add data-state attributes for open/closed states (data-state=\"open\", data-state=\"closed\")\n   - Ensure correct ARIA attributes for accessibility (aria-hidden, aria-modal, role=\"dialog\")\n4. Refactor styling to match React v4:\n   - Update CSS to use modern grid-based layout where appropriate\n   - Implement consistent spacing and padding\n   - Ensure proper z-index handling for overlay and content\n   - Update transition animations to match React v4 specifications\n5. Enhance functionality:\n   - Implement proper focus management when drawer opens/closes\n   - Add keyboard support for closing (Escape key)\n   - Ensure proper touch gesture support for mobile devices\n   - Implement click-outside behavior to dismiss drawer\n6. Update props interface to match React v4 API:\n   - Add support for side property (left, right, top, bottom)\n   - Implement controlled and uncontrolled modes\n   - Add proper event handlers (onOpenChange, etc.)\n7. Ensure proper TypeScript typing for all props and internal state\n8. Create or update documentation with usage examples\n9. Create storybook stories showcasing various drawer configurations",
+        "testStrategy": "1. Write unit tests for the updated Drawer component and all subcomponents\n2. Test all states (open, closed, transitioning) to ensure they render correctly\n3. Verify that all data-slot and data-state attributes are correctly applied\n4. Test keyboard navigation functionality:\n   - Escape key should close the drawer\n   - Tab key should cycle through focusable elements within the drawer\n5. Test focus management:\n   - Focus should move to the drawer when opened\n   - Focus should return to the trigger element when closed\n6. Test accessibility:\n   - Verify ARIA attributes are correctly applied\n   - Test with screen readers to ensure proper announcements\n7. Test responsive behavior across different viewport sizes\n8. Perform visual regression testing against the React v4 Drawer component\n9. Test animation and transition effects across different browsers\n10. Test touch interactions on mobile devices\n11. Verify that the drawer can be opened and closed programmatically",
+        "status": "done",
+        "dependencies": [
+          2,
+          3,
+          31,
+          40
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 45,
+        "title": "Update Hover Card Component to Match React v4 Implementation",
+        "description": "Refactor the existing Hover Card component to align with React v4 styling and functionality standards, ensuring consistent behavior and visual appearance with the latest design system.",
+        "details": "1. Locate and analyze the current Hover Card component implementation\n2. Review React v4 documentation for Hover Card component specifications\n3. Update component structure:\n   - Implement proper data-slot attributes for all child elements (data-slot=\"trigger\", data-slot=\"content\")\n   - Add data-state attributes for open/closed states (data-state=\"open\", data-state=\"closed\")\n   - Ensure correct ARIA attributes for accessibility (aria-expanded, aria-haspopup, etc.)\n4. Refactor styling to match React v4:\n   - Update CSS to use modern grid-based layout where appropriate\n   - Implement consistent spacing and padding\n   - Update animation properties for smooth transitions\n   - Ensure proper z-index handling for overlay scenarios\n5. Enhance functionality:\n   - Implement proper focus management when hover card opens/closes\n   - Add configurable delay options for opening and closing\n   - Ensure proper positioning relative to trigger element\n   - Handle edge cases (viewport boundaries, scrolling containers)\n6. Update API to match React v4 specifications:\n   - Review and update prop names for consistency\n   - Implement any new features from React v4\n   - Maintain backward compatibility where possible\n7. Update documentation:\n   - Add JSDoc comments for all component props\n   - Update usage examples in component documentation\n8. Create or update Storybook stories to showcase all variants and states",
+        "testStrategy": "1. Write unit tests for the updated Hover Card component and all subcomponents\n2. Test all states (open, closed, transitioning) to ensure they render correctly\n3. Verify that all data-slot and data-state attributes are correctly applied\n4. Test keyboard navigation functionality:\n   - Tab key should focus the trigger element\n   - Escape key should close the hover card\n5. Test mouse interaction:\n   - Hover over trigger should open the card after delay\n   - Moving mouse away should close the card after delay\n6. Test focus management:\n   - Focus should be properly trapped within the hover card when open\n   - Focus should return to trigger when closed\n7. Test positioning:\n   - Hover card should position correctly relative to trigger\n   - Hover card should reposition when near viewport edges\n8. Test accessibility:\n   - Verify screen reader announcements\n   - Check contrast ratios for all color combinations\n9. Perform visual regression testing against the React v4 reference implementation\n10. Test across different browsers and screen sizes to ensure consistent behavior",
+        "status": "done",
+        "dependencies": [
+          2,
+          3,
+          31,
+          40
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 46,
+        "title": "Update Menubar Component to Match React v4 Implementation",
+        "description": "Refactor the existing Menubar component to align with React v4 styling and functionality standards, ensuring consistent behavior and visual appearance with the latest design system.",
+        "details": "1. Locate and analyze the current Menubar component implementation\n2. Review React v4 documentation for Menubar component specifications\n3. Update component structure:\n   - Implement proper data-slot attributes for all child elements (data-slot=\"trigger\", data-slot=\"content\", data-slot=\"item\", data-slot=\"separator\", data-slot=\"submenu\")\n   - Add data-state attributes for open/closed states (data-state=\"open\", data-state=\"closed\")\n   - Ensure correct ARIA attributes for accessibility (aria-haspopup, aria-expanded, role=\"menubar\", etc.)\n4. Refactor styling to match React v4:\n   - Update CSS to use modern grid-based layout where appropriate\n   - Implement consistent spacing and padding\n   - Apply updated color tokens and typography\n   - Ensure proper focus states and animations\n5. Enhance functionality:\n   - Implement proper keyboard navigation (arrow keys, Enter, Escape)\n   - Add support for submenus with proper focus management\n   - Ensure proper event handling for clicks, focus, and blur events\n   - Implement proper positioning logic for dropdown menus\n6. Update documentation and examples:\n   - Create comprehensive API documentation\n   - Update usage examples to reflect new implementation\n   - Document accessibility features and keyboard shortcuts\n7. Ensure backward compatibility:\n   - Maintain existing public API where possible\n   - Provide migration guidance for breaking changes",
+        "testStrategy": "1. Write unit tests for the updated Menubar component and all subcomponents\n2. Test all states (open, closed, disabled) to ensure they render correctly\n3. Verify that all data-slot and data-state attributes are correctly applied\n4. Test keyboard navigation functionality:\n   - Arrow keys for navigating between menu items\n   - Enter/Space for selecting items\n   - Escape for closing menus\n   - Tab for proper focus management\n5. Test mouse interaction:\n   - Click to open/close menus\n   - Hover behavior for submenus\n   - Click outside to dismiss\n6. Test accessibility:\n   - Verify correct ARIA attributes\n   - Test with screen readers\n   - Ensure proper focus management\n7. Test responsive behavior:\n   - Verify proper rendering on different screen sizes\n   - Test touch interactions on mobile devices\n8. Perform visual regression testing:\n   - Compare against design specifications\n   - Ensure consistent appearance with other React v4 components\n9. Create integration tests with other components that might interact with Menubar",
+        "status": "pending",
+        "dependencies": [
+          2,
+          3,
+          31,
+          40,
+          43
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 47,
+        "title": "Update Pagination Component to Match React v4 Implementation",
+        "description": "Refactor the existing Pagination component to align with React v4 styling and functionality standards, ensuring consistent behavior and visual appearance with the latest design system.",
+        "details": "1. Locate and analyze the current Pagination component implementation\n2. Review React v4 documentation for Pagination component specifications\n3. Update component structure:\n   - Implement proper data-slot attributes for all child elements (data-slot=\"root\", data-slot=\"item\", data-slot=\"prev\", data-slot=\"next\", data-slot=\"ellipsis\")\n   - Add data-state attributes for different states (data-state=\"active\", data-state=\"disabled\")\n   - Ensure correct ARIA attributes for accessibility (aria-current, aria-label, aria-disabled)\n4. Refactor styling to match React v4:\n   - Update CSS to use modern grid-based layout where appropriate\n   - Implement consistent spacing and padding according to design system\n   - Ensure proper hover, focus, and active states\n   - Apply correct typography and color tokens\n5. Update functionality:\n   - Implement proper keyboard navigation between pagination items\n   - Ensure correct focus management when navigating\n   - Add support for dynamic page ranges and ellipsis behavior\n   - Implement proper event handling for page changes\n6. Optimize for performance:\n   - Ensure efficient re-rendering when page changes\n   - Implement proper memoization for pagination calculations\n7. Update documentation:\n   - Add JSDoc comments for component props and methods\n   - Update usage examples in component documentation\n   - Document accessibility features and keyboard interactions",
+        "testStrategy": "1. Write unit tests for the updated Pagination component and all subcomponents\n2. Test all states (active, disabled, hover, focus) to ensure they render correctly\n3. Verify that all data-slot and data-state attributes are correctly applied\n4. Test keyboard navigation functionality:\n   - Tab key should navigate between pagination items\n   - Arrow keys should navigate between adjacent pages\n   - Home/End keys should navigate to first/last pages\n5. Test screen reader accessibility:\n   - Verify ARIA attributes are correctly applied\n   - Ensure proper announcements when navigating between pages\n6. Test responsive behavior:\n   - Verify component adapts correctly to different viewport sizes\n   - Test mobile-specific interactions and touch targets\n7. Test edge cases:\n   - Single page scenario (pagination should be hidden or simplified)\n   - Large number of pages (ellipsis behavior)\n   - First/last page edge cases\n8. Perform visual regression testing against React v4 design specifications\n9. Test integration with parent components that use pagination",
+        "status": "done",
+        "dependencies": [
+          2,
+          3,
+          31,
+          40
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 48,
+        "title": "Update Progress Component to Match React v4 Implementation",
+        "description": "Refactor the existing Progress component to align with React v4 styling and functionality standards, ensuring consistent behavior and visual appearance with the latest design system.",
+        "details": "1. Locate and analyze the current Progress component implementation\n2. Review React v4 documentation for Progress component specifications\n3. Update component structure:\n   - Implement proper data-slot attributes for all child elements (data-slot=\"root\", data-slot=\"indicator\", data-slot=\"label\")\n   - Add data-state attributes for different states (data-state=\"indeterminate\", data-state=\"complete\")\n   - Ensure correct ARIA attributes for accessibility (aria-valuenow, aria-valuemin, aria-valuemax, aria-label)\n4. Refactor styling to match React v4:\n   - Update CSS to use modern grid-based layout where appropriate\n   - Implement consistent spacing and padding\n   - Ensure proper color variables are used for theming\n   - Add support for different sizes (small, medium, large)\n   - Implement proper transitions for smooth animations\n5. Update component API:\n   - Ensure props match React v4 specifications (value, max, indeterminate, etc.)\n   - Add support for custom indicators and labels\n   - Implement proper event handling for progress updates\n6. Implement proper TypeScript typing for all components and props\n7. Update documentation and examples to reflect the new implementation\n8. Create storybook stories showcasing various progress states and configurations",
+        "testStrategy": "1. Write unit tests for the updated Progress component and all subcomponents\n2. Test all states (determinate, indeterminate, complete) to ensure they render correctly\n3. Verify that all data-slot and data-state attributes are correctly applied\n4. Test accessibility features:\n   - Verify ARIA attributes are correctly set based on progress value\n   - Test with screen readers to ensure proper announcements\n5. Test responsive behavior across different viewport sizes\n6. Verify that animations and transitions work correctly\n7. Test with different values (0%, 50%, 100%) to ensure proper rendering\n8. Test edge cases:\n   - Very small progress values\n   - Exceeding maximum value\n   - Negative values\n9. Perform visual regression testing against the React v4 reference implementation\n10. Test integration with other components that might use Progress (e.g., file uploads, form submissions)",
+        "status": "done",
+        "dependencies": [
+          2,
+          3,
+          31,
+          40
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 49,
+        "title": "Update Resizable Component to Match React v4 Implementation",
+        "description": "Refactor the existing Resizable component to align with React v4 styling and functionality standards, ensuring consistent behavior and visual appearance with the latest design system.",
+        "details": "1. Locate and analyze the current Resizable component implementation\n2. Review React v4 documentation for Resizable component specifications\n3. Update component structure:\n   - Implement proper data-slot attributes for all child elements (data-slot=\"handle\", data-slot=\"content\", data-slot=\"panel\")\n   - Add data-state attributes for different states (data-state=\"resizing\", data-state=\"idle\")\n   - Ensure correct ARIA attributes for accessibility (aria-valuenow, aria-valuemin, aria-valuemax)\n4. Refactor styling to match React v4:\n   - Update CSS to use modern grid-based layout where appropriate\n   - Implement consistent spacing and padding\n   - Update handle styling to match React v4 design language\n   - Ensure proper transitions and animations during resize operations\n5. Enhance functionality:\n   - Implement proper touch support for mobile devices\n   - Add keyboard accessibility for resizing operations\n   - Ensure resize constraints work correctly (min/max width/height)\n   - Implement proper event handling for resize start, during, and end events\n6. Update component API:\n   - Ensure props match React v4 naming conventions\n   - Add support for custom resize handles\n   - Implement proper callback functions for resize events\n7. Optimize performance:\n   - Use ResizeObserver for efficient resize detection\n   - Implement debouncing for resize events\n   - Ensure smooth animations during resize operations\n8. Update documentation:\n   - Document all props, methods, and events\n   - Provide usage examples for different configurations",
+        "testStrategy": "1. Write unit tests for the updated Resizable component and all subcomponents\n2. Test all states (idle, resizing) to ensure they render correctly\n3. Verify that all data-slot and data-state attributes are correctly applied\n4. Test keyboard navigation functionality:\n   - Arrow keys should adjust size when handle is focused\n   - Tab key should navigate between handles\n5. Test touch interactions on mobile devices\n6. Test resize constraints:\n   - Verify minimum and maximum size constraints are enforced\n   - Test aspect ratio preservation when enabled\n7. Test performance:\n   - Measure render times during resize operations\n   - Ensure no layout thrashing occurs during resize\n8. Test cross-browser compatibility:\n   - Verify functionality in Chrome, Firefox, Safari, and Edge\n9. Test accessibility:\n   - Verify screen readers can announce resize operations\n   - Ensure keyboard users can resize components effectively\n10. Integration tests:\n    - Test the Resizable component within layouts and other components\n    - Verify it works correctly in responsive containers",
+        "status": "done",
+        "dependencies": [
+          2,
+          3,
+          31,
+          40
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 50,
+        "title": "Update Sheet Component to Match React v4 Implementation",
+        "description": "Refactor the existing Sheet component to align with React v4 styling and functionality standards, ensuring consistent behavior and visual appearance with the latest design system.",
+        "details": "1. Locate and analyze the current Sheet component implementation\n2. Review React v4 documentation for Sheet component specifications\n3. Update component structure:\n   - Implement proper data-slot attributes for all child elements (data-slot=\"trigger\", data-slot=\"content\", data-slot=\"close\", data-slot=\"header\", data-slot=\"footer\")\n   - Add data-state attributes for different states (data-state=\"open\", data-state=\"closed\", data-state=\"transitioning\")\n   - Ensure correct ARIA attributes for accessibility (aria-hidden, aria-modal, role=\"dialog\")\n4. Refactor styling to match React v4:\n   - Update CSS to use modern grid-based layout where appropriate\n   - Implement consistent spacing, padding, and border-radius\n   - Ensure proper z-index handling for stacked sheets\n   - Update animations for smooth opening/closing transitions\n5. Enhance functionality:\n   - Implement proper focus management when sheet opens/closes\n   - Add support for different sheet positions (bottom, top, left, right)\n   - Ensure proper backdrop handling and click-outside behavior\n   - Add support for sheet resizing if applicable\n6. Update event handling:\n   - Implement proper keyboard event handling (Escape to close)\n   - Add support for touch gestures for mobile devices (swipe to dismiss)\n7. Ensure proper TypeScript typing for all props and state\n8. Update documentation with new props, examples, and usage guidelines\n9. Optimize performance:\n   - Use React.memo or useMemo where appropriate\n   - Ensure proper cleanup on unmount",
+        "testStrategy": "1. Write unit tests for the updated Sheet component and all subcomponents\n2. Test all states (open, closed, transitioning) to ensure they render correctly\n3. Verify that all data-slot and data-state attributes are correctly applied\n4. Test keyboard navigation functionality:\n   - Escape key should close the sheet\n   - Tab key should cycle through focusable elements within the sheet\n5. Test accessibility features:\n   - Verify ARIA attributes are correctly applied\n   - Test with screen readers to ensure proper announcements\n   - Verify focus trapping works correctly when sheet is open\n6. Test responsive behavior:\n   - Verify sheet displays correctly on different screen sizes\n   - Test mobile-specific interactions like swipe gestures\n7. Test edge cases:\n   - Multiple sheets open simultaneously\n   - Nested sheets\n   - Dynamic content changes within the sheet\n8. Performance testing:\n   - Measure render times and ensure no unnecessary re-renders\n   - Test with React DevTools profiler\n9. Cross-browser testing:\n   - Verify functionality in Chrome, Firefox, Safari, and Edge\n10. Integration testing:\n    - Test sheet component within actual application flows",
+        "status": "done",
+        "dependencies": [
+          2,
+          3,
+          31,
+          40
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 51,
+        "title": "Update Table Component to Match React v4 Implementation",
+        "description": "Refactor the existing Table component to align with React v4 styling and functionality standards, ensuring consistent behavior and visual appearance with the latest design system.",
+        "details": "1. Locate and analyze the current Table component implementation\n2. Review React v4 documentation for Table component specifications\n3. Update component structure:\n   - Implement proper data-slot attributes for all child elements (data-slot=\"header\", data-slot=\"body\", data-slot=\"row\", data-slot=\"cell\", data-slot=\"footer\")\n   - Add data-state attributes for different states (data-state=\"selected\", data-state=\"sorted\", data-state=\"loading\")\n   - Ensure correct ARIA attributes for accessibility (aria-sort, aria-selected, role=\"table\", role=\"row\", role=\"cell\", etc.)\n4. Refactor styling to match React v4:\n   - Update CSS to use modern grid-based layout where appropriate\n   - Implement consistent spacing and padding\n   - Apply updated typography styles for headers and cell content\n   - Ensure proper border styling and cell separation\n   - Update hover and focus states to match design system\n5. Enhance functionality:\n   - Implement proper sorting mechanism with appropriate animations\n   - Add support for row selection with checkboxes\n   - Ensure pagination integration works correctly\n   - Add support for expandable rows if specified in React v4\n   - Implement responsive behavior for different screen sizes\n6. Update event handlers:\n   - Ensure click, hover, and focus events are properly handled\n   - Implement keyboard navigation between cells and rows\n   - Add support for custom cell renderers\n7. Optimize performance:\n   - Implement virtualization for large datasets if supported in React v4\n   - Ensure efficient re-rendering when data changes\n8. Update documentation:\n   - Add JSDoc comments for component props and methods\n   - Update usage examples in component documentation\n   - Document any breaking changes from previous implementation",
+        "testStrategy": "1. Write unit tests for the updated Table component and all subcomponents\n2. Test all states (sorted, selected, loading) to ensure they render correctly\n3. Verify that all data-slot and data-state attributes are correctly applied\n4. Test keyboard navigation functionality:\n   - Tab key should navigate between focusable elements\n   - Arrow keys should navigate between cells when appropriate\n   - Space/Enter should trigger selection\n5. Test sorting functionality:\n   - Clicking on sortable headers should change sort direction\n   - Verify correct sorting indicators are displayed\n   - Test multi-column sorting if supported\n6. Test selection functionality:\n   - Selecting rows should update internal state correctly\n   - Bulk selection should work as expected\n7. Test responsive behavior:\n   - Verify table displays correctly on different screen sizes\n   - Test horizontal scrolling behavior for wide tables\n8. Accessibility testing:\n   - Verify screen readers can properly navigate and announce table content\n   - Check that all ARIA attributes are correctly implemented\n   - Test high contrast mode compatibility\n9. Performance testing:\n   - Measure render times with large datasets\n   - Verify smooth scrolling with virtualization if implemented\n10. Integration testing:\n    - Test integration with other components like Pagination\n    - Verify data fetching and state management works correctly",
+        "status": "done",
+        "dependencies": [
+          2,
+          3,
+          31,
+          40
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 52,
+        "title": "Update Textarea Component to Match React v4 Implementation",
+        "description": "Refactor the existing Textarea component to align with React v4 styling and functionality standards, ensuring consistent behavior and visual appearance with the latest design system.",
+        "details": "1. Locate and analyze the current Textarea component implementation\n2. Review React v4 documentation for Textarea component specifications\n3. Update component structure:\n   - Implement proper data-slot attributes for all child elements (data-slot=\"root\", data-slot=\"input\")\n   - Add data-state attributes for different states (data-state=\"disabled\", data-state=\"invalid\", data-state=\"focused\")\n   - Ensure correct ARIA attributes for accessibility (aria-invalid, aria-required, aria-describedby)\n4. Refactor styling to match React v4:\n   - Update CSS to use modern variables for consistent theming\n   - Implement proper focus, hover, and active states\n   - Ensure responsive behavior for different viewport sizes\n   - Apply consistent border-radius, padding, and typography\n5. Enhance functionality:\n   - Implement auto-resize capability for dynamic content\n   - Add character count and max length visual indicators\n   - Support for placeholder text with proper styling\n   - Ensure proper handling of disabled and read-only states\n6. Update props interface to match React v4 standards:\n   - Add support for all standard HTML textarea attributes\n   - Implement custom props for enhanced functionality (resize, maxLength, showCount)\n   - Ensure proper TypeScript typing for all props\n7. Ensure proper integration with Form components:\n   - Validate compatibility with Form validation\n   - Test integration with form submission\n8. Update documentation with new props and usage examples",
+        "testStrategy": "1. Write unit tests for the updated Textarea component and all subcomponents\n2. Test all states (default, focused, disabled, invalid, read-only) to ensure they render correctly\n3. Verify that all data-slot and data-state attributes are correctly applied\n4. Test keyboard interaction:\n   - Tab navigation works correctly\n   - Focus and blur events trigger appropriate visual changes\n5. Test auto-resize functionality with various content lengths\n6. Verify character count and max length features work correctly\n7. Test accessibility features:\n   - Screen reader compatibility\n   - Proper ARIA attributes are present\n   - Keyboard navigation works as expected\n8. Test responsive behavior across different viewport sizes\n9. Verify integration with Form components:\n   - Form validation works correctly with the Textarea\n   - Error states display properly\n   - Form submission includes Textarea values\n10. Cross-browser testing to ensure consistent appearance and behavior",
+        "status": "done",
+        "dependencies": [
+          2,
+          3,
+          31,
+          40
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 53,
+        "title": "Update Toggle Group Component to Match React v4 Implementation",
+        "description": "Refactor the existing Toggle Group component to align with React v4 styling and functionality standards, ensuring consistent behavior and visual appearance with the latest design system.",
+        "details": "1. Locate and analyze the current Toggle Group component implementation\n2. Review React v4 documentation for Toggle Group component specifications\n3. Update component structure:\n   - Implement proper data-slot attributes for all child elements (data-slot=\"root\", data-slot=\"item\", data-slot=\"indicator\")\n   - Add data-state attributes for different states (data-state=\"on\", data-state=\"off\", data-state=\"disabled\")\n   - Ensure correct ARIA attributes for accessibility (aria-pressed, role=\"button\", aria-disabled)\n4. Refactor styling to match React v4:\n   - Update CSS to use modern layout techniques\n   - Implement consistent spacing, padding, and border-radius\n   - Update color variables to match the v4 design tokens\n   - Ensure proper transitions and animations for state changes\n5. Update functionality:\n   - Implement proper keyboard navigation between toggle items\n   - Ensure correct focus management\n   - Support both single and multiple selection modes\n   - Add proper event handlers for state changes\n6. Update TypeScript types and props interface:\n   - Ensure all props match React v4 specifications\n   - Add proper type definitions for all component variants\n   - Document props with JSDoc comments\n7. Ensure backward compatibility:\n   - Add deprecation warnings for removed props\n   - Provide migration path for any breaking changes\n8. Update component documentation:\n   - Add usage examples\n   - Document all available props and variants\n   - Include accessibility guidelines",
+        "testStrategy": "1. Write unit tests for the updated Toggle Group component and all subcomponents\n2. Test all states (on, off, disabled) to ensure they render correctly\n3. Verify that all data-slot and data-state attributes are correctly applied\n4. Test keyboard navigation functionality:\n   - Arrow keys should navigate between toggle items\n   - Space/Enter keys should toggle the selected item\n   - Tab key should follow the correct focus order\n5. Test accessibility features:\n   - Verify ARIA attributes are correctly applied\n   - Test with screen readers to ensure proper announcements\n   - Verify focus indicators are visible and working correctly\n6. Test different variants:\n   - Single selection mode\n   - Multiple selection mode\n   - Different sizes and orientations\n7. Test responsive behavior:\n   - Verify component works correctly on different screen sizes\n   - Test touch interactions on mobile devices\n8. Integration tests:\n   - Test the component within forms and other complex UI patterns\n   - Verify it works correctly with form validation\n9. Visual regression tests:\n   - Compare screenshots before and after the update\n   - Ensure visual consistency with other React v4 components",
+        "status": "done",
+        "dependencies": [
+          2,
+          3,
+          31,
+          40
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 54,
+        "title": "Update Toggle Component to Match React v4 Implementation",
+        "description": "Refactor the existing Toggle component to align with React v4 styling and functionality standards, ensuring consistent behavior and visual appearance with the latest design system.",
+        "details": "1. Locate and analyze the current Toggle component implementation\n2. Review React v4 documentation for Toggle component specifications\n3. Update component structure:\n   - Implement proper data-slot attributes for all child elements (data-slot=\"root\", data-slot=\"thumb\", data-slot=\"indicator\")\n   - Add data-state attributes for different states (data-state=\"checked\", data-state=\"unchecked\", data-state=\"disabled\")\n   - Ensure correct ARIA attributes for accessibility (aria-checked, aria-disabled)\n4. Refactor styling to match React v4:\n   - Update CSS to use modern variables for colors, transitions, and sizing\n   - Implement consistent border-radius and shadow effects\n   - Ensure proper focus and hover states with appropriate visual feedback\n5. Update component behavior:\n   - Implement smooth transition animations between states\n   - Ensure proper keyboard interaction (Space to toggle)\n   - Add support for controlled and uncontrolled usage patterns\n6. Update TypeScript types and props interface to match React v4 specifications\n7. Ensure proper event handling for onChange callbacks\n8. Add support for custom styling via className and style props\n9. Document the updated component with JSDoc comments and update any existing documentation\n10. Optimize for performance by preventing unnecessary re-renders",
+        "testStrategy": "1. Write unit tests for the updated Toggle component covering all functionality:\n   - Test rendering in all states (checked, unchecked, disabled)\n   - Test controlled and uncontrolled modes\n   - Test keyboard interactions (Space to toggle)\n   - Test mouse interactions (click to toggle)\n2. Verify that all data-slot and data-state attributes are correctly applied in each state\n3. Test accessibility features:\n   - Verify ARIA attributes are correctly applied and updated\n   - Test with screen readers to ensure proper announcements\n   - Verify keyboard focus management\n4. Visual regression tests:\n   - Compare screenshots of the component in all states against design specifications\n   - Test across different viewport sizes to ensure responsive behavior\n5. Integration tests:\n   - Test the Toggle component within forms to ensure proper form submission\n   - Test with other components that might interact with it\n6. Performance tests:\n   - Measure render times and ensure no performance regressions\n7. Browser compatibility tests:\n   - Test across major browsers (Chrome, Firefox, Safari, Edge)",
+        "status": "done",
+        "dependencies": [
+          2,
+          3,
+          31,
+          40
+        ],
+        "priority": "medium",
+        "subtasks": []
+      }
+    ],
+    "metadata": {
+      "created": "2025-06-18T16:54:16.056Z",
+      "updated": "2025-06-18T22:06:16.014Z",
+      "description": "Tasks for master context"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+	"name": "aspect-ratio",
+	"type": "component:ui",
+	"registryDependencies": [],
+	"dependencies": [],
+	"devDependencies": [],
+	"unocss": {
+		"config": {
+			"plugins": []
+		}
+	},
+	"cssVars": {},
+	"files": [
+		{
+			"name": "aspect-ratio.tsx",
+			"content": "./aspect-ratio.tsx"
+		}
+	]
+}
